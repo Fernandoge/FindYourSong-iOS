@@ -72,9 +72,12 @@ class SendSongViewController: UIViewController, SendSongDisplayLogic
         doSomething()
     }
     
-    // MARK: Do something
+    // MARK: Send song
     
-    //@IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var searchTextField: UITextField!
+    
+    @IBAction func searchPressed(_ sender: UIButton) {
+    }
     
     func doSomething()
     {
