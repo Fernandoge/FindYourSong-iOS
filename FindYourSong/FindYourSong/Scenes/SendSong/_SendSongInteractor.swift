@@ -19,23 +19,23 @@ protocol  SendSongBusinessLogic
 
 protocol SendSongDataStore
 {
-  //var name: String { get set }
+    //var name: String { get set }
 }
 
 class SendSongInteractor: SendSongBusinessLogic, SendSongDataStore
 {
     var presenter:  SendSongPresentationLogic?
     var worker:  SendSongWorker?
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-    func doSomething(request:  SendSong.Something.Request)
-  {
-    worker =  SendSongWorker()
-    worker?.doSomeWork()
+    //var name: String = ""
     
-    let response =  SendSong.Something.Response()
-    presenter?.presentSomething(response: response)
-  }
+    // MARK: Do something
+    
+    func doSomething(request:  SendSong.Something.Request)
+    {
+        worker =  SendSongWorker()
+        worker?.doSomeWork()
+        
+        let response =  SendSong.Something.Response()
+        presenter?.presentSomething(response: response)
+    }
 }

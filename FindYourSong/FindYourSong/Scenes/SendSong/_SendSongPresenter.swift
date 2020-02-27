@@ -20,12 +20,12 @@ protocol SendSongPresentationLogic
 class SendSongPresenter:  SendSongPresentationLogic
 {
     weak var viewController: SendSongDisplayLogic?
-  
-  // MARK: Do something
-  
+    
+    // MARK: Do something
+    
     func presentSomething(response: SendSong.Something.Response)
-  {
-    let viewModel = SendSong.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
-  }
+    {
+        let viewModel = SendSong.Something.ViewModel()
+        viewController?.displaySomething(viewModel: viewModel)
+    }
 }

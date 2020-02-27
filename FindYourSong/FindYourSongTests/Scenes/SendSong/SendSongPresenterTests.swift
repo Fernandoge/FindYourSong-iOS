@@ -15,55 +15,55 @@ import XCTest
 
 class SendSongPresenterTests: XCTestCase
 {
-  // MARK: Subject under test
-  
-  var sut: SendSongPresenter!
-  
-  // MARK: Test lifecycle
-  
-  override func setUp()
-  {
-    super.setUp()
-    setupSendSongPresenter()
-  }
-  
-  override func tearDown()
-  {
-    super.tearDown()
-  }
-  
-  // MARK: Test setup
-  
-  func setupSendSongPresenter()
-  {
-    sut = SendSongPresenter()
-  }
-  
-  // MARK: Test doubles
-  
-  class SendSongDisplayLogicSpy: SendSongDisplayLogic
-  {
-    var displaySomethingCalled = false
+    // MARK: Subject under test
     
-    func displaySomething(viewModel: SendSong.Something.ViewModel)
+    var sut: SendSongPresenter!
+    
+    // MARK: Test lifecycle
+    
+    override func setUp()
     {
-      displaySomethingCalled = true
+        super.setUp()
+        setupSendSongPresenter()
     }
-  }
-  
-  // MARK: Tests
-  
-  func testPresentSomething()
-  {
-    // Given
-    let spy = SendSongDisplayLogicSpy()
-    sut.viewController = spy
-    let response = SendSong.Something.Response()
     
-    // When
-    sut.presentSomething(response: response)
+    override func tearDown()
+    {
+        super.tearDown()
+    }
     
-    // Then
-    XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
-  }
+    // MARK: Test setup
+    
+    func setupSendSongPresenter()
+    {
+        sut = SendSongPresenter()
+    }
+    
+    // MARK: Test doubles
+    
+    class SendSongDisplayLogicSpy: SendSongDisplayLogic
+    {
+        var displaySomethingCalled = false
+        
+        func displaySomething(viewModel: SendSong.Something.ViewModel)
+        {
+            displaySomethingCalled = true
+        }
+    }
+    
+    // MARK: Tests
+    
+    func testPresentSomething()
+    {
+        // Given
+        let spy = SendSongDisplayLogicSpy()
+        sut.viewController = spy
+        let response = SendSong.Something.Response()
+        
+        // When
+        sut.presentSomething(response: response)
+        
+        // Then
+        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+    }
 }

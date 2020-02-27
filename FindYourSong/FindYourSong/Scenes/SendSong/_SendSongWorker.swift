@@ -14,7 +14,7 @@ import UIKit
 
 class SendSongWorker
 {
-  func doSomeWork()
-  {
-  }
+    func doSomeWork()
+    {
+    }
 }

@@ -15,40 +15,40 @@ import XCTest
 
 class SendSongWorkerTests: XCTestCase
 {
-  // MARK: Subject under test
-  
-  var sut: SendSongWorker!
-  
-  // MARK: Test lifecycle
-  
-  override func setUp()
-  {
-    super.setUp()
-    setupSendSongWorker()
-  }
-  
-  override func tearDown()
-  {
-    super.tearDown()
-  }
-  
-  // MARK: Test setup
-  
-  func setupSendSongWorker()
-  {
-    sut = SendSongWorker()
-  }
-  
-  // MARK: Test doubles
-  
-  // MARK: Tests
-  
-  func testSomething()
-  {
-    // Given
+    // MARK: Subject under test
     
-    // When
+    var sut: SendSongWorker!
     
-    // Then
-  }
+    // MARK: Test lifecycle
+    
+    override func setUp()
+    {
+        super.setUp()
+        setupSendSongWorker()
+    }
+    
+    override func tearDown()
+    {
+        super.tearDown()
+    }
+    
+    // MARK: Test setup
+    
+    func setupSendSongWorker()
+    {
+        sut = SendSongWorker()
+    }
+    
+    // MARK: Test doubles
+    
+    // MARK: Tests
+    
+    func testSomething()
+    {
+        // Given
+        
+        // When
+        
+        // Then
+    }
 }

@@ -19,7 +19,21 @@
 		6BB265192408855600929D57 /* _SendSongModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB265132408855600929D57 /* _SendSongModels.swift */; };
 		6BB2651A2408855600929D57 /* _SendSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB265142408855600929D57 /* _SendSongViewController.swift */; };
 		6BB2651B2408855600929D57 /* _SendSongInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB265152408855600929D57 /* _SendSongInteractor.swift */; };
+		6BB265312408874B00929D57 /* SendSongViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2652D2408874B00929D57 /* SendSongViewControllerTests.swift */; };
+		6BB265322408874B00929D57 /* SendSongInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2652E2408874B00929D57 /* SendSongInteractorTests.swift */; };
+		6BB265332408874B00929D57 /* SendSongWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2652F2408874B00929D57 /* SendSongWorkerTests.swift */; };
+		6BB265342408874B00929D57 /* SendSongPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB265302408874B00929D57 /* SendSongPresenterTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6BB265252408870600929D57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6BB264E9240865D100929D57 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6BB264F0240865D100929D57;
+			remoteInfo = FindYourSong;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6BB264F1240865D100929D57 /* FindYourSong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindYourSong.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,10 +50,23 @@
 		6BB265132408855600929D57 /* _SendSongModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _SendSongModels.swift; sourceTree = "<group>"; };
 		6BB265142408855600929D57 /* _SendSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _SendSongViewController.swift; sourceTree = "<group>"; };
 		6BB265152408855600929D57 /* _SendSongInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _SendSongInteractor.swift; sourceTree = "<group>"; };
+		6BB265202408870600929D57 /* FindYourSongTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FindYourSongTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BB265242408870600929D57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BB2652D2408874B00929D57 /* SendSongViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSongViewControllerTests.swift; sourceTree = "<group>"; };
+		6BB2652E2408874B00929D57 /* SendSongInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSongInteractorTests.swift; sourceTree = "<group>"; };
+		6BB2652F2408874B00929D57 /* SendSongWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSongWorkerTests.swift; sourceTree = "<group>"; };
+		6BB265302408874B00929D57 /* SendSongPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSongPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6BB264EE240865D100929D57 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BB2651D2408870600929D57 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -53,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				6BB264F3240865D100929D57 /* FindYourSong */,
+				6BB265212408870600929D57 /* FindYourSongTests */,
 				6BB264F2240865D100929D57 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				6BB264F1240865D100929D57 /* FindYourSong.app */,
+				6BB265202408870600929D57 /* FindYourSongTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +112,42 @@
 		6BB2650F240884A100929D57 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6BB2652C2408873800929D57 /* SendSong */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		6BB265212408870600929D57 /* FindYourSongTests */ = {
+			isa = PBXGroup;
+			children = (
+				6BB2652A2408872A00929D57 /* Scenes */,
+				6BB265242408870600929D57 /* Info.plist */,
+			);
+			path = FindYourSongTests;
+			sourceTree = "<group>";
+		};
+		6BB2652A2408872A00929D57 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				6BB2652B2408872E00929D57 /* SendSong */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		6BB2652B2408872E00929D57 /* SendSong */ = {
+			isa = PBXGroup;
+			children = (
+				6BB2652D2408874B00929D57 /* SendSongViewControllerTests.swift */,
+				6BB2652E2408874B00929D57 /* SendSongInteractorTests.swift */,
+				6BB2652F2408874B00929D57 /* SendSongWorkerTests.swift */,
+				6BB265302408874B00929D57 /* SendSongPresenterTests.swift */,
+			);
+			path = SendSong;
+			sourceTree = "<group>";
+		};
+		6BB2652C2408873800929D57 /* SendSong */ = {
+			isa = PBXGroup;
+			children = (
 				6BB265102408855600929D57 /* _SendSongPresenter.swift */,
 				6BB265112408855600929D57 /* _SendSongWorker.swift */,
 				6BB265122408855600929D57 /* _SendSongRouter.swift */,
@@ -90,7 +155,7 @@
 				6BB265142408855600929D57 /* _SendSongViewController.swift */,
 				6BB265152408855600929D57 /* _SendSongInteractor.swift */,
 			);
-			path = Scenes;
+			path = SendSong;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -113,6 +178,24 @@
 			productReference = 6BB264F1240865D100929D57 /* FindYourSong.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6BB2651F2408870600929D57 /* FindYourSongTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BB265272408870600929D57 /* Build configuration list for PBXNativeTarget "FindYourSongTests" */;
+			buildPhases = (
+				6BB2651C2408870600929D57 /* Sources */,
+				6BB2651D2408870600929D57 /* Frameworks */,
+				6BB2651E2408870600929D57 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6BB265262408870600929D57 /* PBXTargetDependency */,
+			);
+			name = FindYourSongTests;
+			productName = FindYourSongTests;
+			productReference = 6BB265202408870600929D57 /* FindYourSongTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -125,6 +208,10 @@
 				TargetAttributes = {
 					6BB264F0240865D100929D57 = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					6BB2651F2408870600929D57 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 6BB264F0240865D100929D57;
 					};
 				};
 			};
@@ -142,6 +229,7 @@
 			projectRoot = "";
 			targets = (
 				6BB264F0240865D100929D57 /* FindYourSong */,
+				6BB2651F2408870600929D57 /* FindYourSongTests */,
 			);
 		};
 /* End PBXProject section */
@@ -154,6 +242,13 @@
 				6BB26501240865D200929D57 /* LaunchScreen.storyboard in Resources */,
 				6BB264FE240865D200929D57 /* Assets.xcassets in Resources */,
 				6BB264FC240865D100929D57 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BB2651E2408870600929D57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +271,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BB2651C2408870600929D57 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BB265312408874B00929D57 /* SendSongViewControllerTests.swift in Sources */,
+				6BB265332408874B00929D57 /* SendSongWorkerTests.swift in Sources */,
+				6BB265322408874B00929D57 /* SendSongInteractorTests.swift in Sources */,
+				6BB265342408874B00929D57 /* SendSongPresenterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6BB265262408870600929D57 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6BB264F0240865D100929D57 /* FindYourSong */;
+			targetProxy = 6BB265252408870600929D57 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6BB264FA240865D100929D57 /* Main.storyboard */ = {
@@ -348,6 +462,46 @@
 			};
 			name = Release;
 		};
+		6BB265282408870600929D57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WJC9VRB854;
+				INFOPLIST_FILE = FindYourSongTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fernandoge.FindYourSongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FindYourSong.app/FindYourSong";
+			};
+			name = Debug;
+		};
+		6BB265292408870600929D57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WJC9VRB854;
+				INFOPLIST_FILE = FindYourSongTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fernandoge.FindYourSongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FindYourSong.app/FindYourSong";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -365,6 +519,15 @@
 			buildConfigurations = (
 				6BB26506240865D200929D57 /* Debug */,
 				6BB26507240865D200929D57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6BB265272408870600929D57 /* Build configuration list for PBXNativeTarget "FindYourSongTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BB265282408870600929D57 /* Debug */,
+				6BB265292408870600929D57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

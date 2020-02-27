@@ -15,55 +15,55 @@ import XCTest
 
 class SendSongInteractorTests: XCTestCase
 {
-  // MARK: Subject under test
-  
-  var sut: SendSongInteractor!
-  
-  // MARK: Test lifecycle
-  
-  override func setUp()
-  {
-    super.setUp()
-    setupSendSongInteractor()
-  }
-  
-  override func tearDown()
-  {
-    super.tearDown()
-  }
-  
-  // MARK: Test setup
-  
-  func setupSendSongInteractor()
-  {
-    sut = SendSongInteractor()
-  }
-  
-  // MARK: Test doubles
-  
-  class SendSongPresentationLogicSpy: SendSongPresentationLogic
-  {
-    var presentSomethingCalled = false
+    // MARK: Subject under test
     
-    func presentSomething(response: SendSong.Something.Response)
+    var sut: SendSongInteractor!
+    
+    // MARK: Test lifecycle
+    
+    override func setUp()
     {
-      presentSomethingCalled = true
+        super.setUp()
+        setupSendSongInteractor()
     }
-  }
-  
-  // MARK: Tests
-  
-  func testDoSomething()
-  {
-    // Given
-    let spy = SendSongPresentationLogicSpy()
-    sut.presenter = spy
-    let request = SendSong.Something.Request()
     
-    // When
-    sut.doSomething(request: request)
+    override func tearDown()
+    {
+        super.tearDown()
+    }
     
-    // Then
-    XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
-  }
+    // MARK: Test setup
+    
+    func setupSendSongInteractor()
+    {
+        sut = SendSongInteractor()
+    }
+    
+    // MARK: Test doubles
+    
+    class SendSongPresentationLogicSpy: SendSongPresentationLogic
+    {
+        var presentSomethingCalled = false
+        
+        func presentSomething(response: SendSong.Something.Response)
+        {
+            presentSomethingCalled = true
+        }
+    }
+    
+    // MARK: Tests
+    
+    func testDoSomething()
+    {
+        // Given
+        let spy = SendSongPresentationLogicSpy()
+        sut.presenter = spy
+        let request = SendSong.Something.Request()
+        
+        // When
+        sut.doSomething(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
+    }
 }

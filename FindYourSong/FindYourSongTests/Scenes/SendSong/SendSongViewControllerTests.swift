@@ -15,78 +15,78 @@ import XCTest
 
 class SendSongViewControllerTests: XCTestCase
 {
-  // MARK: Subject under test
-  
-  var sut: SendSongViewController!
-  var window: UIWindow!
-  
-  // MARK: Test lifecycle
-  
-  override func setUp()
-  {
-    super.setUp()
-    window = UIWindow()
-    setupSendSongViewController()
-  }
-  
-  override func tearDown()
-  {
-    window = nil
-    super.tearDown()
-  }
-  
-  // MARK: Test setup
-  
-  func setupSendSongViewController()
-  {
-    let bundle = Bundle.main
-    let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-    sut = storyboard.instantiateViewController(withIdentifier: "SendSongViewController") as! SendSongViewController
-  }
-  
-  func loadView()
-  {
-    window.addSubview(sut.view)
-    RunLoop.current.run(until: Date())
-  }
-  
-  // MARK: Test doubles
-  
-  class SendSongBusinessLogicSpy: SendSongBusinessLogic
-  {
-    var doSomethingCalled = false
+    // MARK: Subject under test
     
-    func doSomething(request: SendSong.Something.Request)
+    var sut: SendSongViewController!
+    var window: UIWindow!
+    
+    // MARK: Test lifecycle
+    
+    override func setUp()
     {
-      doSomethingCalled = true
+        super.setUp()
+        window = UIWindow()
+        setupSendSongViewController()
     }
-  }
-  
-  // MARK: Tests
-  
-  func testShouldDoSomethingWhenViewIsLoaded()
-  {
-    // Given
-    let spy = SendSongBusinessLogicSpy()
-    sut.interactor = spy
     
-    // When
-    loadView()
+    override func tearDown()
+    {
+        window = nil
+        super.tearDown()
+    }
     
-    // Then
-    XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
-  }
-  
-  func testDisplaySomething()
-  {
-    // Given
-    let viewModel = SendSong.Something.ViewModel()
+    // MARK: Test setup
     
-    // When
-    loadView()
-    sut.displaySomething(viewModel: viewModel)
+    func setupSendSongViewController()
+    {
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        sut = storyboard.instantiateViewController(withIdentifier: "SendSongViewController") as! SendSongViewController
+    }
     
-    // Then
-    //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
-  }
+    func loadView()
+    {
+        window.addSubview(sut.view)
+        RunLoop.current.run(until: Date())
+    }
+    
+    // MARK: Test doubles
+    
+    class SendSongBusinessLogicSpy: SendSongBusinessLogic
+    {
+        var doSomethingCalled = false
+        
+        func doSomething(request: SendSong.Something.Request)
+        {
+            doSomethingCalled = true
+        }
+    }
+    
+    // MARK: Tests
+    
+    func testShouldDoSomethingWhenViewIsLoaded()
+    {
+        // Given
+        let spy = SendSongBusinessLogicSpy()
+        sut.interactor = spy
+        
+        // When
+        loadView()
+        
+        // Then
+        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+    }
+    
+    func testDisplaySomething()
+    {
+        // Given
+        let viewModel = SendSong.Something.ViewModel()
+        
+        // When
+        loadView()
+        sut.displaySomething(viewModel: viewModel)
+        
+        // Then
+        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+    }
 }
