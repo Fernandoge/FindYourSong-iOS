@@ -19,14 +19,15 @@ protocol SongSearchBusinessLogic
 
 protocol SongSearchDataStore
 {
-    //var name: String { get set }
+    var songName: String { get set }
 }
 
 class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore
 {
+    
     var presenter: SongSearchPresentationLogic?
     var worker: SongSearchWorker?
-    //var name: String = ""
+    var songName: String = ""
     
     // MARK: Do something
     

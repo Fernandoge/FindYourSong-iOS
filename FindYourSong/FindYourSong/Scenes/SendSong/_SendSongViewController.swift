@@ -69,8 +69,13 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
         searchTextField.delegate = self
         //TODO: Fetch recent searches
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        searchTextField.text = ""
     }
     
     // MARK: Send song
@@ -116,6 +121,6 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     
     func sendSongToSearch(viewModel: SendSong.SendSong.ViewModel)
     {
-        //send songName to a new view and start searching for songs!
+        router?.routeToSendSong(segue: nil)
     }
 }

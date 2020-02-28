@@ -14,7 +14,7 @@ import UIKit
 
 @objc protocol  SendSongRoutingLogic
 {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToSendSong(segue: UIStoryboardSegue?)
 }
 
 protocol  SendSongDataPassing
@@ -27,34 +27,29 @@ class SendSongRouter: NSObject, SendSongRoutingLogic, SendSongDataPassing
     weak var viewController: SendSongViewController?
     var dataStore: SendSongDataStore?
     
-    // MARK: Routing
+    //MARK: Routing
     
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-    //{
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
+    func routeToSendSong(segue: UIStoryboardSegue?)
+    {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SongSearchViewController") as! SongSearchViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToSendSong(source: dataStore!, destination: &destinationDS)
+        navigateToSendSong(source: viewController!, destination: destinationVC)
+        
+    }
     
-    // MARK: Navigation
+    //MARK: Navigation
     
-    //func navigateToSomewhere(source: SendSongViewController, destination: SomewhereViewController)
-    //{
-    //  source.show(destination, sender: nil)
-    //}
+    func navigateToSendSong(source: SendSongViewController, destination: SongSearchViewController)
+    {
+        source.show(destination, sender: nil)
+    }
     
-    // MARK: Passing data
+    //MARK: Passing data
     
-    //func passDataToSomewhere(source: SendSongDataStore, destination: inout SomewhereDataStore)
-    //{
-    //  destination.name = source.name
-    //}
+    func passDataToSendSong(source:  SendSongDataStore, destination: inout SongSearchDataStore)
+    {
+        destination.songName = source.songName
+    }
 }

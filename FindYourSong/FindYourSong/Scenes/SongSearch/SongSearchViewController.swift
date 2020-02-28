@@ -17,7 +17,7 @@ protocol SongSearchDisplayLogic: class
     func displaySomething(viewModel: SongSearch.Something.ViewModel)
 }
 
-class SongSearchViewController: UIViewController, SongSearchDisplayLogic
+class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
 {
     var interactor: SongSearchBusinessLogic?
     var router: (NSObjectProtocol & SongSearchRoutingLogic & SongSearchDataPassing)?

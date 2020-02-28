@@ -89,11 +89,41 @@
                     <navigationItem key="navigationItem" id="ALf-5R-Tkh"/>
                     <connections>
                         <outlet property="searchTextField" destination="5gf-oy-RQT" id="YZx-KM-LFc"/>
+                        <segue destination="a9A-q1-f4N" kind="show" identifier="goToSongSearch" id="GwB-fS-9CT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="138.61607142857142"/>
+        </scene>
+        <!--Song Search View Controller-->
+        <scene sceneID="eZm-Qe-w5y">
+            <objects>
+                <tableViewController storyboardIdentifier="SongSearchViewController" id="a9A-q1-f4N" customClass="SongSearchViewController" customModule="FindYourSong" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u0H-Lf-kym">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="CmQ-or-NCw">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CmQ-or-NCw" id="7on-ZR-x1w">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="a9A-q1-f4N" id="GIO-fo-O8u"/>
+                            <outlet property="delegate" destination="a9A-q1-f4N" id="vbk-ly-aut"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="mDn-6i-9JL"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aUQ-7U-uM4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1833" y="139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XYr-7R-TaA">
