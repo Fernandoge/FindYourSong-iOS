@@ -78,12 +78,33 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBAction func searchPressed(_ sender: Any) {
-        searchTextField.endEditing(true)
+        if searchTextField.isEditing == false && searchTextField.text == "" {
+            searchTextField.placeholder = "Type here what you want to search"
+        } else {
+            searchTextField.endEditing(true)
+        }
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if isTextFieldEmpty(textField: textField){
+            return false
+        } else {
+            return true
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
         return true
+    }
+    
+    func isTextFieldEmpty(textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return false
+        } else {
+            textField.placeholder = "Type what you want to search"
+            return true
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
