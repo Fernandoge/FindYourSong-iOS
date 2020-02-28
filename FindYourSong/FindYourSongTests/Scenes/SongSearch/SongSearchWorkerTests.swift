@@ -43,12 +43,12 @@ class SongSearchWorkerTests: XCTestCase
     
     // MARK: Tests
     
-    func testSomething()
-    {
-        // Given
-        
-        // When
-        
-        // Then
-    }
+//    func testSomething()
+//    {
+//        // Given
+//
+//        // When
+//
+//        // Then
+//    }
 }

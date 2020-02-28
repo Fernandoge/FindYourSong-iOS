@@ -43,13 +43,12 @@ class SongSearchInteractorTests: XCTestCase
     
     class SongSearchWorkerSpy: SongSearchWorker
     {
-        let itunesData = ItunesData()
+        let songs = [Song(name: "test", artistName: "test", albumNameCensored: "test", albumArtworkUrl100: "test", previewUrl: "test")]
         var fetchSongsCalled = false
         
-        func fetchSongs(response: SongSearch.FetchSongs.Response)
-        {
+        override func fetch(songName: String) {
             fetchSongsCalled = true
-            delegate?.songSearchWorker(songSearchWorker: self, didFetchSongs: [itunesData])
+            delegate?.songSearchWorker(songSearchWorker: self, didFetchSongs: songs)
         }
     }
     
@@ -79,6 +78,6 @@ class SongSearchInteractorTests: XCTestCase
         
         // Then
         XCTAssertTrue(songSearchWorkerSpy.fetchSongsCalled, "fetchSongs(request:) should ask the worker to fetch the songs")
-        XCTAssertNotNil(sut.worker?.delegate, "fetchSongs(request:) should set itself to be delegate to be notified of fetch results")
+        XCTAssertNotNil(sut.worker.delegate, "fetchSongs(request:) should set itself to be delegate to be notified of fetch results")
     }
 }

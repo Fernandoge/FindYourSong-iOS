@@ -25,7 +25,7 @@ class SongSearchPresenter: SongSearchPresentationLogic
     
     func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
     {
-        let viewModel = SongSearch.FetchSongs.ViewModel()
-        viewController?.displayFetchedSongs(viewModel: viewModel)
+        //let viewModel = SongSearch.FetchSongs.ViewModel()
+        //viewController?.displayFetchedSongs(viewModel: viewModel)
     }
 }

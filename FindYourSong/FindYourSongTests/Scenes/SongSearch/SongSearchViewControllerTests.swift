@@ -96,9 +96,13 @@ class SongSearchViewControllerTests: XCTestCase
         loadView()
         
         // When
-        sut.displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel())
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumNameCensored: "test", albumArtworkUrl100: "test", previewUrl: "test")]
+        let viewModel = SongSearch.FetchSongs.ViewModel(displayedSongs: expectedSongs)
+        sut.displayFetchedSongs(viewModel: viewModel)
         
         // Then
+        let actualSongs = sut.displayedSongs
+        XCTAssertEqual(actualSongs, expectedSongs, "displayFetchedSongs(viewModel:) should display the songs results")
         XCTAssert(tableViewSpy.reloadDataCalled, "displayFetchedSongs(viewModel:) should reload the table view")
     }
 }

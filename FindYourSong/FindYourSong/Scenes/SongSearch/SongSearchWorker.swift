@@ -13,14 +13,13 @@
 import UIKit
 
 protocol SongSearchWorkerDelegate {
-    func songSearchWorker(songSearchWorker: SongSearchWorker, didFetchSongs songs: [ItunesData])
+    func songSearchWorker(songSearchWorker: SongSearchWorker, didFetchSongs songs: [Song])
 }
 
 class SongSearchWorker
 {
     var delegate: SongSearchWorkerDelegate?
     
-    func doSomeWork()
-    {
+    func fetch(songName: String){
     }
 }

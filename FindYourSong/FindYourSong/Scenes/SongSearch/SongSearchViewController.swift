@@ -69,14 +69,16 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        doSomething()
+        fetchSongs()
     }
     
-    // MARK: Do something
+    // MARK: Fetch Songs
+    
+    var displayedSongs: [SongSearch.FetchSongs.ViewModel.DisplayedSong] = []
     
     //@IBOutlet weak var nameTextField: UITextField!
     
-    func doSomething()
+    func fetchSongs()
     {
         let request = SongSearch.FetchSongs.Request()
         interactor?.fetchSongs(request: request)

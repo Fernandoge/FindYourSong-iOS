@@ -26,17 +26,16 @@ class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore
 {
     
     var presenter: SongSearchPresentationLogic?
-    var worker: SongSearchWorker?
+    var worker = SongSearchWorker()
     var songName: String = ""
     
     // MARK: Do something
     
     func fetchSongs(request: SongSearch.FetchSongs.Request)
     {
-        worker = SongSearchWorker()
-        worker?.doSomeWork()
+        worker.fetch(songName: songName)
         
-        let response = SongSearch.FetchSongs.Response()
-        presenter?.presentFetchedSongs(response: response)
+        //let response = SongSearch.FetchSongs.Response()
+        //presenter?.presentFetchedSongs(response: response)
     }
 }

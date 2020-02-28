@@ -21,11 +21,19 @@ enum SongSearch
         struct Request
         {
         }
-        struct Response
-        {
+        struct Response {
+            var songs: [Song]
         }
         struct ViewModel
         {
+            struct DisplayedSong: Equatable {
+                var name: String
+                var artistName: String
+                var albumNameCensored: String
+                var albumArtworkUrl100: String
+                var previewUrl: String
+            }
+            var displayedSongs: [DisplayedSong]
         }
     }
 }
