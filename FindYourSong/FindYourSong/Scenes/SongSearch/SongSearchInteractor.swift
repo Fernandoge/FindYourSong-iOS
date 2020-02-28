@@ -22,20 +22,23 @@ protocol SongSearchDataStore
     var songName: String { get set }
 }
 
-class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore
+class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore, SongSearchWorkerDelegate
 {
     
     var presenter: SongSearchPresentationLogic?
     var worker = SongSearchWorker()
     var songName: String = ""
     
-    // MARK: Do something
+    // MARK: Fetch songs
     
     func fetchSongs(request: SongSearch.FetchSongs.Request)
     {
+        worker.delegate = self
         worker.fetch(songName: songName)
-        
-        //let response = SongSearch.FetchSongs.Response()
-        //presenter?.presentFetchedSongs(response: response)
+    }
+    
+    func songSearchWorker(songSearchWorker: SongSearchWorker, didFetchSongs songs: [Song]) {
+        let response = SongSearch.FetchSongs.Response(songs:songs)
+        presenter?.presentFetchedSongs(response: response)
     }
 }

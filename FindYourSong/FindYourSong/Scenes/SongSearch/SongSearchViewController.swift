@@ -93,6 +93,7 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     
     func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
     {
-        //nameTextField.text = viewModel.name
+        displayedSongs = viewModel.displayedSongs
+        tableView.reloadData()
     }
 }

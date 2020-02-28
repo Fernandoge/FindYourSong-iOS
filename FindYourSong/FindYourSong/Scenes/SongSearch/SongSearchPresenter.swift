@@ -21,11 +21,17 @@ class SongSearchPresenter: SongSearchPresentationLogic
 {
     weak var viewController: SongSearchDisplayLogic?
     
-    // MARK: Do something
+    // MARK: Fetch Songs
     
     func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
     {
-        //let viewModel = SongSearch.FetchSongs.ViewModel()
-        //viewController?.displayFetchedSongs(viewModel: viewModel)
+        let displayedSongs = convertSongs(songs: response.songs)
+        let viewModel = SongSearch.FetchSongs.ViewModel(displayedSongs: displayedSongs)
+        viewController?.displayFetchedSongs(viewModel: viewModel)
+    }
+    
+    private func convertSongs(songs: [Song]) -> [SongSearch.FetchSongs.ViewModel.DisplayedSong]
+    {
+        return songs.map { SongSearch.FetchSongs.ViewModel.DisplayedSong(name: $0.name, artistName: $0.artistName, albumNameCensored: $0.albumNameCensored, albumArtworkUrl100: $0.albumArtworkUrl100, previewUrl: $0.previewUrl) }
     }
 }
