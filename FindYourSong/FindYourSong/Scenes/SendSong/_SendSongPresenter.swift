@@ -14,18 +14,18 @@ import UIKit
 
 protocol SendSongPresentationLogic
 {
-    func presentSomething(response: SendSong.Something.Response)
+    func presentSendSong(response: SendSong.SendSong.Response)
 }
 
 class SendSongPresenter:  SendSongPresentationLogic
 {
     weak var viewController: SendSongDisplayLogic?
     
-    // MARK: Do something
+    // MARK: Send song
     
-    func presentSomething(response: SendSong.Something.Response)
+    func presentSendSong(response: SendSong.SendSong.Response)
     {
-        let viewModel = SendSong.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+        let viewModel = SendSong.SendSong.ViewModel()
+        viewController?.sendSongToSearch(viewModel: viewModel)
     }
 }

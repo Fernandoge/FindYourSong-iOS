@@ -12,30 +12,31 @@
 
 import UIKit
 
-protocol  SendSongBusinessLogic
+protocol SendSongBusinessLogic
 {
-    func doSomething(request:  SendSong.Something.Request)
+    func sendSong(request: SendSong.SendSong.Request)
 }
 
 protocol SendSongDataStore
 {
-    //var name: String { get set }
+    var songName: String { get set }
 }
 
 class SendSongInteractor: SendSongBusinessLogic, SendSongDataStore
 {
-    var presenter:  SendSongPresentationLogic?
-    var worker:  SendSongWorker?
-    //var name: String = ""
+    var presenter: SendSongPresentationLogic?
+    var worker: SendSongWorker?
+    var songName: String = ""
     
-    // MARK: Do something
+    // MARK: Send song
     
-    func doSomething(request:  SendSong.Something.Request)
+    func sendSong(request: SendSong.SendSong.Request)
     {
         worker =  SendSongWorker()
         worker?.doSomeWork()
         
-        let response =  SendSong.Something.Response()
-        presenter?.presentSomething(response: response)
+        songName = request.songName
+        let response = SendSong.SendSong.Response()
+        presenter?.presentSendSong(response: response)
     }
 }

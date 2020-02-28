@@ -16,10 +16,10 @@ enum SendSong
 {
     // MARK: Use cases
     
-    enum Something
+    enum SendSong
     {
-        struct Request
-        {
+        struct Request {
+            var songName: String
         }
         struct Response
         {

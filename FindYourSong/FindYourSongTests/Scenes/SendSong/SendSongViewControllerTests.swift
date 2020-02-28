@@ -56,32 +56,19 @@ class SendSongViewControllerTests: XCTestCase
     {
         var doSomethingCalled = false
         
-        func doSomething(request: SendSong.Something.Request)
+        func doSomething(request: SendSong.SendSong.Request)
         {
             doSomethingCalled = true
         }
         
         var sendSongCalled = false
         
-        func sendSong(request: SendSong.Something.Request) {
+        func sendSong(request: SendSong.SendSong.Request) {
             sendSongCalled = true
         }
     }
     
     // MARK: Tests
-    
-    func testShouldDoSomethingWhenViewIsLoaded()
-    {
-        // Given
-        let spy = SendSongBusinessLogicSpy()
-        sut.interactor = spy
-        
-        // When
-        loadView()
-        
-        // Then
-        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
-    }
     
     func testSearchButtonShouldCallSendSongMethod() {
         //Given

@@ -40,30 +40,30 @@ class SendSongPresenterTests: XCTestCase
     }
     
     // MARK: Test doubles
-    
-    class SendSongDisplayLogicSpy: SendSongDisplayLogic
-    {
-        var displaySomethingCalled = false
-        
-        func displaySomething(viewModel: SendSong.Something.ViewModel)
-        {
-            displaySomethingCalled = true
-        }
-    }
-    
-    // MARK: Tests
-    
-    func testPresentSomething()
-    {
-        // Given
-        let spy = SendSongDisplayLogicSpy()
-        sut.viewController = spy
-        let response = SendSong.Something.Response()
-        
-        // When
-        sut.presentSomething(response: response)
-        
-        // Then
-        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
-    }
+//
+//    class SendSongDisplayLogicSpy: SendSongDisplayLogic
+//    {
+//        var displaySomethingCalled = false
+//
+//        func displaySomething(viewModel: SendSong.SendSong.ViewModel)
+//        {
+//            displaySomethingCalled = true
+//        }
+//    }
+//
+//    // MARK: Tests
+//
+//    func testPresentSomething()
+//    {
+//        // Given
+//        let spy = SendSongDisplayLogicSpy()
+//        sut.viewController = spy
+//        let response = SendSong.SendSong.Response()
+//
+//        // When
+//        sut.presentSomething(response: response)
+//
+//        // Then
+//        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+//    }
 }

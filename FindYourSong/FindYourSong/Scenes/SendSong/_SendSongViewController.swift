@@ -14,7 +14,7 @@ import UIKit
 
 protocol  SendSongDisplayLogic: class
 {
-    func displaySomething(viewModel:  SendSong.Something.ViewModel)
+    func sendSongToSearch(viewModel: SendSong.SendSong.ViewModel)
 }
 
 class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDisplayLogic
@@ -69,7 +69,8 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        doSomething()
+        searchTextField.delegate = self
+        //TODO: Fetch recent searches
     }
     
     // MARK: Send song
@@ -77,19 +78,23 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBAction func searchPressed(_ sender: Any) {
+        searchTextField.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.endEditing(true)
         return true
     }
-    func doSomething()
-    {
-        let request = SendSong.Something.Request()
-        interactor?.doSomething(request: request)
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let songName = textField.text ?? ""
+        let request = SendSong.SendSong.Request(songName: songName)
+        interactor?.sendSong(request: request)
     }
     
-    func displaySomething(viewModel: SendSong.Something.ViewModel)
+    
+    func sendSongToSearch(viewModel: SendSong.SendSong.ViewModel)
     {
-        //nameTextField.text = viewModel.name
+        //send songName to a new view and start searching for songs!
     }
 }
