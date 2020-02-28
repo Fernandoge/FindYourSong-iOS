@@ -41,7 +41,7 @@ class SongSearchViewControllerTests: XCTestCase
     {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        sut = storyboard.instantiateViewController(withIdentifier: "SongSearchViewController") as! SongSearchViewController
+        sut = storyboard.instantiateViewController(withIdentifier: "SongSearchViewController") as? SongSearchViewController
     }
     
     func loadView()
@@ -52,41 +52,53 @@ class SongSearchViewControllerTests: XCTestCase
     
     // MARK: Test doubles
     
+    class TableViewSpy: UITableView {
+        // MARK: Method call expectations
+        
+        var reloadDataCalled = false
+        
+        // MARK: Spied Methods
+        
+        override func reloadData() {
+            reloadDataCalled = true
+        }
+    }
+    
     class SongSearchBusinessLogicSpy: SongSearchBusinessLogic
     {
-        var doSomethingCalled = false
+        var fetchSongs = false
         
-        func doSomething(request: SongSearch.Something.Request)
+        func fetchSongs(request: SongSearch.FetchSongs.Request)
         {
-            doSomethingCalled = true
+            fetchSongs = true
         }
     }
     
     // MARK: Tests
     
-    func testShouldDoSomethingWhenViewIsLoaded()
+    func testShouldFetchSongsWhenViewIsLoaded()
     {
         // Given
-        let spy = SongSearchBusinessLogicSpy()
-        sut.interactor = spy
+        let songSearchBusinessLogicSpy = SongSearchBusinessLogicSpy()
+        sut.interactor = songSearchBusinessLogicSpy
         
         // When
         loadView()
         
         // Then
-        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(songSearchBusinessLogicSpy.fetchSongs, "viewDidLoad() should ask the interactor fetch songs")
     }
     
-    func testDisplaySomething()
-    {
+    func testDisplayFetchedSongsShouldReloadTableView() {
         // Given
-        let viewModel = SongSearch.Something.ViewModel()
+        let tableViewSpy = TableViewSpy()
+        sut.tableView = tableViewSpy
+        loadView()
         
         // When
-        loadView()
-        sut.displaySomething(viewModel: viewModel)
+        sut.displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel())
         
         // Then
-        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+        XCTAssert(tableViewSpy.reloadDataCalled, "displayFetchedSongs(viewModel:) should reload the table view")
     }
 }

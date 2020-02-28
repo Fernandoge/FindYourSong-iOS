@@ -45,25 +45,31 @@ class SongSearchPresenterTests: XCTestCase
     {
         var displaySomethingCalled = false
         
-        func displaySomething(viewModel: SongSearch.Something.ViewModel)
+        func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
         {
             displaySomethingCalled = true
+        }
+        
+        var displayFetchedSongsCalled = false
+        
+        func displayFetchedSongsCalled(viewModel: SongSearch.FetchSongs.ViewModel) {
+            displayFetchedSongsCalled = true
         }
     }
     
     // MARK: Tests
     
-    func testPresentSomething()
+    func testPresentFetchedSongsShouldAskViewControllerToFetchSongs()
     {
         // Given
-        let spy = SongSearchDisplayLogicSpy()
-        sut.viewController = spy
-        let response = SongSearch.Something.Response()
+        let songSearchDisplayLogicSpy = SongSearchDisplayLogicSpy()
+        sut.viewController = songSearchDisplayLogicSpy
+        let response = SongSearch.FetchSongs.Response()
         
         // When
-        sut.presentSomething(response: response)
+        sut.presentFetchedSongs(response: response)
         
         // Then
-        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+        XCTAssertTrue(songSearchDisplayLogicSpy.displayFetchedSongsCalled, "presentSomething(response:) should ask the view controller to display the result")
     }
 }

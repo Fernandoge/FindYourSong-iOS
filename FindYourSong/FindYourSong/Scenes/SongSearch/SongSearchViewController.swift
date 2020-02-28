@@ -14,7 +14,7 @@ import UIKit
 
 protocol SongSearchDisplayLogic: class
 {
-    func displaySomething(viewModel: SongSearch.Something.ViewModel)
+    func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
 }
 
 class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
@@ -78,11 +78,11 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     
     func doSomething()
     {
-        let request = SongSearch.Something.Request()
-        interactor?.doSomething(request: request)
+        let request = SongSearch.FetchSongs.Request()
+        interactor?.fetchSongs(request: request)
     }
     
-    func displaySomething(viewModel: SongSearch.Something.ViewModel)
+    func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
     {
         //nameTextField.text = viewModel.name
     }

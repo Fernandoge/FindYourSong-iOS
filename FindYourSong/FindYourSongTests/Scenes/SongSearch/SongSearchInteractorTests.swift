@@ -41,29 +41,44 @@ class SongSearchInteractorTests: XCTestCase
     
     // MARK: Test doubles
     
+    class SongSearchWorkerSpy: SongSearchWorker
+    {
+        let itunesData = ItunesData()
+        var fetchSongsCalled = false
+        
+        func fetchSongs(response: SongSearch.FetchSongs.Response)
+        {
+            fetchSongsCalled = true
+            delegate?.songSearchWorker(songSearchWorker: self, didFetchSongs: [itunesData])
+        }
+    }
+    
+    
     class SongSearchPresentationLogicSpy: SongSearchPresentationLogic
     {
-        var presentSomethingCalled = false
+        var presentFetchedSongsCalled = false
         
-        func presentSomething(response: SongSearch.Something.Response)
-        {
-            presentSomethingCalled = true
+        func presentFetchedSongs(response: SongSearch.FetchSongs.Response) {
+            presentFetchedSongsCalled = true
         }
+        
+        
     }
     
     // MARK: Tests
     
-    func testDoSomething()
+    func testFetchGistsShouldAskWorkerToFetchSongsWithDelegate()
     {
         // Given
-        let spy = SongSearchPresentationLogicSpy()
-        sut.presenter = spy
-        let request = SongSearch.Something.Request()
+        let songSearchWorkerSpy = SongSearchWorkerSpy()
+        sut.worker = songSearchWorkerSpy
+        let request = SongSearch.FetchSongs.Request()
         
         // When
-        sut.doSomething(request: request)
+        sut.fetchSongs(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
+        XCTAssertTrue(songSearchWorkerSpy.fetchSongsCalled, "fetchSongs(request:) should ask the worker to fetch the songs")
+        XCTAssertNotNil(sut.worker?.delegate, "fetchSongs(request:) should set itself to be delegate to be notified of fetch results")
     }
 }

@@ -14,7 +14,7 @@ import UIKit
 
 protocol SongSearchBusinessLogic
 {
-    func doSomething(request: SongSearch.Something.Request)
+    func fetchSongs(request: SongSearch.FetchSongs.Request)
 }
 
 protocol SongSearchDataStore
@@ -31,12 +31,12 @@ class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore
     
     // MARK: Do something
     
-    func doSomething(request: SongSearch.Something.Request)
+    func fetchSongs(request: SongSearch.FetchSongs.Request)
     {
         worker = SongSearchWorker()
         worker?.doSomeWork()
         
-        let response = SongSearch.Something.Response()
-        presenter?.presentSomething(response: response)
+        let response = SongSearch.FetchSongs.Response()
+        presenter?.presentFetchedSongs(response: response)
     }
 }

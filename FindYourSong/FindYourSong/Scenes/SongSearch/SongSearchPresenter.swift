@@ -14,7 +14,7 @@ import UIKit
 
 protocol SongSearchPresentationLogic
 {
-    func presentSomething(response: SongSearch.Something.Response)
+    func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
 }
 
 class SongSearchPresenter: SongSearchPresentationLogic
@@ -23,9 +23,9 @@ class SongSearchPresenter: SongSearchPresentationLogic
     
     // MARK: Do something
     
-    func presentSomething(response: SongSearch.Something.Response)
+    func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
     {
-        let viewModel = SongSearch.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+        let viewModel = SongSearch.FetchSongs.ViewModel()
+        viewController?.displayFetchedSongs(viewModel: viewModel)
     }
 }

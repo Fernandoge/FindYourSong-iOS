@@ -12,8 +12,14 @@
 
 import UIKit
 
+protocol SongSearchWorkerDelegate {
+    func songSearchWorker(songSearchWorker: SongSearchWorker, didFetchSongs songs: [ItunesData])
+}
+
 class SongSearchWorker
 {
+    var delegate: SongSearchWorkerDelegate?
+    
     func doSomeWork()
     {
     }

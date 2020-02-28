@@ -16,7 +16,7 @@ enum SongSearch
 {
     // MARK: Use cases
     
-    enum Something
+    enum FetchSongs
     {
         struct Request
         {
