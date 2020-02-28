@@ -41,7 +41,7 @@ class SendSongViewControllerTests: XCTestCase
     {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        sut = storyboard.instantiateViewController(withIdentifier: "SendSongViewController") as! SendSongViewController
+        sut = storyboard.instantiateViewController(withIdentifier: "SendSongViewController") as? SendSongViewController
     }
     
     func loadView()
@@ -60,6 +60,12 @@ class SendSongViewControllerTests: XCTestCase
         {
             doSomethingCalled = true
         }
+        
+        var sendSongCalled = false
+        
+        func sendSong(request: SendSong.Something.Request) {
+            sendSongCalled = true
+        }
     }
     
     // MARK: Tests
@@ -77,16 +83,33 @@ class SendSongViewControllerTests: XCTestCase
         XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
     }
     
-    func testDisplaySomething()
-    {
-        // Given
-        let viewModel = SendSong.Something.ViewModel()
+    func testSearchButtonShouldCallSendSongMethod() {
+        //Given
+        loadView()
+        let sendSongBusinessLogicSpy = SendSongBusinessLogicSpy()
+        sut.interactor = sendSongBusinessLogicSpy
         
         // When
-        loadView()
-        sut.displaySomething(viewModel: viewModel)
+        sut.searchTextField.becomeFirstResponder()
+        sut.searchTextField.text = "SongName"
+        sut.searchPressed(self)
         
-        // Then
-        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+        //Then
+        XCTAssert(sendSongBusinessLogicSpy.sendSongCalled, "Pressing the search button should call SendSong method")
+    }
+    
+    func testTappingReturnKeyShouldCallSendSongMethod() {
+        //Given
+        loadView()
+        let sendSongBusinessLogicSpy = SendSongBusinessLogicSpy()
+        sut.interactor = sendSongBusinessLogicSpy
+        
+        // When
+        sut.searchTextField.becomeFirstResponder()
+        sut.searchTextField.text = "SongName"
+        _ = sut.textFieldShouldReturn(sut.searchTextField)
+        
+        //Then
+        XCTAssert(sendSongBusinessLogicSpy.sendSongCalled, "Tapping the return key should call SearchSong method")
     }
 }

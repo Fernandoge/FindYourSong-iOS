@@ -17,7 +17,7 @@ protocol  SendSongDisplayLogic: class
     func displaySomething(viewModel:  SendSong.Something.ViewModel)
 }
 
-class SendSongViewController: UIViewController, SendSongDisplayLogic
+class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDisplayLogic
 {
     var interactor:  SendSongBusinessLogic?
     var router: (NSObjectProtocol & SendSongRoutingLogic & SendSongDataPassing)?
@@ -76,9 +76,12 @@ class SendSongViewController: UIViewController, SendSongDisplayLogic
     
     @IBOutlet weak var searchTextField: UITextField!
     
-    @IBAction func searchPressed(_ sender: UIButton) {
+    @IBAction func searchPressed(_ sender: Any) {
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
     func doSomething()
     {
         let request = SendSong.Something.Request()
