@@ -54,13 +54,6 @@ class SendSongViewControllerTests: XCTestCase
     
     class SendSongBusinessLogicSpy: SendSongBusinessLogic
     {
-        var doSomethingCalled = false
-        
-        func doSomething(request: SendSong.SendSong.Request)
-        {
-            doSomethingCalled = true
-        }
-        
         var sendSongCalled = false
         
         func sendSong(request: SendSong.SendSong.Request) {
@@ -97,6 +90,37 @@ class SendSongViewControllerTests: XCTestCase
         _ = sut.textFieldShouldReturn(sut.searchTextField)
         
         //Then
-        XCTAssert(sendSongBusinessLogicSpy.sendSongCalled, "Tapping the return key should call SearchSong method")
+        XCTAssert(sendSongBusinessLogicSpy.sendSongCalled, "Tapping the return key should call SendSong method")
     }
+    
+    func testSearchButtonShouldNotSearchWhenSearchTextFieldIsEmpty() {
+        // Given
+        loadView()
+        let sendSongBusinessLogicSpy = SendSongBusinessLogicSpy()
+        sut.interactor = sendSongBusinessLogicSpy
+        
+        // When
+        sut.searchTextField.text = ""
+        sut.searchPressed(self)
+        
+        // Then
+        XCTAssert(!sendSongBusinessLogicSpy.sendSongCalled, "Sending a song should contain text to send")
+        
+    }
+
+    func testTappingReturnKeyShouldNotSearchWhenSearchTextFieldIsEmpty() {
+        // Given
+        loadView()
+        let sendSongBusinessLogicSpy = SendSongBusinessLogicSpy()
+        sut.interactor = sendSongBusinessLogicSpy
+        
+        // When
+        sut.searchTextField.text = ""
+        _ = sut.textFieldShouldReturn(sut.searchTextField)
+        
+        // Then
+        XCTAssert(!sendSongBusinessLogicSpy.sendSongCalled, "Sending a song should contain text to send")
+        
+    }
+    
 }
