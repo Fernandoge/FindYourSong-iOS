@@ -12,6 +12,13 @@
 
 import UIKit
 
+
+class SongCell: UITableViewCell {
+    @IBOutlet weak var songNameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
+    @IBOutlet weak var albumImage: UIImageView!
+}
+
 protocol SongSearchDisplayLogic: class
 {
     func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)

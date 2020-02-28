@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ned-zT-22b">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -37,7 +37,7 @@
                                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NrZ-tL-rcI" userLabel="Search Button">
-                                                <rect key="frame" x="294" y="1" width="40" height="38"/>
+                                                <rect key="frame" x="294" y="1" width="40" height="37.666666666666671"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="F9H-Ib-yd3"/>
                                                     <constraint firstAttribute="height" constant="40" id="PdW-CJ-Fvz"/>
@@ -100,18 +100,83 @@
         <scene sceneID="eZm-Qe-w5y">
             <objects>
                 <tableViewController storyboardIdentifier="SongSearchViewController" id="a9A-q1-f4N" customClass="SongSearchViewController" customModule="FindYourSong" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u0H-Lf-kym">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u0H-Lf-kym">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="CmQ-or-NCw">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" id="CmQ-or-NCw" customClass="SongCell" customModule="FindYourSong" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CmQ-or-NCw" id="7on-ZR-x1w">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="foc-R7-nhK">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MGc-WC-S1l">
+                                                    <rect key="frame" x="0.0" y="10" width="100" height="80"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="608-KT-cCe">
+                                                            <rect key="frame" x="20" y="1" width="80" height="78.666666666666671"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="80" id="Ys4-tT-QVl"/>
+                                                                <constraint firstAttribute="width" constant="80" id="bUm-T0-oGy"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="608-KT-cCe" secondAttribute="bottom" id="8aS-rD-wMR"/>
+                                                        <constraint firstItem="608-KT-cCe" firstAttribute="top" secondItem="MGc-WC-S1l" secondAttribute="top" id="hGf-3s-CBy"/>
+                                                        <constraint firstItem="608-KT-cCe" firstAttribute="leading" secondItem="MGc-WC-S1l" secondAttribute="leading" constant="20" symbolic="YES" id="hvm-XX-AJd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="608-KT-cCe" secondAttribute="trailing" id="u1D-E5-eOJ"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HSJ-ZM-Fgh">
+                                                    <rect key="frame" x="110" y="2" width="304" height="96"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fR3-jW-vzH">
+                                                            <rect key="frame" x="0.0" y="20" width="284" height="56"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OM4-Sh-Bzf" userLabel="Song Name">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="284" height="23"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08G-t5-dgM">
+                                                                    <rect key="frame" x="0.0" y="33" width="284" height="23"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="fR3-jW-vzH" firstAttribute="leading" secondItem="HSJ-ZM-Fgh" secondAttribute="leading" id="ADR-7n-tcH"/>
+                                                        <constraint firstAttribute="trailing" secondItem="fR3-jW-vzH" secondAttribute="trailing" constant="20" symbolic="YES" id="LMp-uI-qBU"/>
+                                                        <constraint firstItem="fR3-jW-vzH" firstAttribute="top" secondItem="HSJ-ZM-Fgh" secondAttribute="top" constant="20" symbolic="YES" id="Xkz-0v-MAY"/>
+                                                        <constraint firstAttribute="bottom" secondItem="fR3-jW-vzH" secondAttribute="bottom" constant="20" symbolic="YES" id="qSY-e0-FUL"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="foc-R7-nhK" firstAttribute="top" secondItem="7on-ZR-x1w" secondAttribute="top" id="2Qe-gZ-O4a"/>
+                                        <constraint firstItem="foc-R7-nhK" firstAttribute="leading" secondItem="7on-ZR-x1w" secondAttribute="leading" id="GR3-sc-h5I"/>
+                                        <constraint firstAttribute="trailing" secondItem="foc-R7-nhK" secondAttribute="trailing" id="PWM-hH-dyg"/>
+                                        <constraint firstAttribute="bottom" secondItem="foc-R7-nhK" secondAttribute="bottom" id="lJO-FN-j8k"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="albumImage" destination="608-KT-cCe" id="WPs-Cg-02z"/>
+                                    <outlet property="artistNameLabel" destination="08G-t5-dgM" id="cgh-d1-ax7"/>
+                                    <outlet property="songNameLabel" destination="OM4-Sh-Bzf" id="GDv-vF-S6W"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -123,7 +188,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aUQ-7U-uM4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1833" y="139"/>
+            <point key="canvasLocation" x="1831.8840579710147" y="138.61607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XYr-7R-TaA">
@@ -146,5 +211,6 @@
     </scenes>
     <resources>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
+        <image name="music.note.list" catalog="system" width="64" height="56"/>
     </resources>
 </document>
