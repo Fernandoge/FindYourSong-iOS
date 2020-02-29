@@ -208,6 +208,63 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
         </scene>
+        <!--Song Album View Controller-->
+        <scene sceneID="XkJ-xe-muA">
+            <objects>
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="oXu-5g-NJ7" customClass="SongAlbumViewController" customModule="FindYourSong" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sku-0D-2bn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="YdO-3e-m0i">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PdD-8d-oo3">
+                                        <rect key="frame" x="157" y="0.0" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="Cq2-kP-ERT"/>
+                                            <constraint firstAttribute="width" constant="100" id="smb-oe-jXW"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7l-N4-IPP">
+                                        <rect key="frame" x="177.33333333333334" y="108" width="59.333333333333343" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5Z-vU-egG">
+                                        <rect key="frame" x="186.33333333333334" y="146" width="41.666666666666657" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DU1-qb-EEK">
+                                        <rect key="frame" x="20" y="174.33333333333331" width="374" height="643.66666666666674"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="DU1-qb-EEK" firstAttribute="leading" secondItem="YdO-3e-m0i" secondAttribute="leading" constant="20" symbolic="YES" id="J9B-1i-qNE"/>
+                                    <constraint firstItem="DU1-qb-EEK" firstAttribute="top" secondItem="Z5Z-vU-egG" secondAttribute="bottom" constant="8" symbolic="YES" id="MNf-YT-Wj0"/>
+                                    <constraint firstAttribute="trailing" secondItem="DU1-qb-EEK" secondAttribute="trailing" constant="20" symbolic="YES" id="d2e-49-vyB"/>
+                                    <constraint firstAttribute="bottom" secondItem="DU1-qb-EEK" secondAttribute="bottom" id="yNT-LK-8co"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wE2-xo-dOA" firstAttribute="trailing" secondItem="YdO-3e-m0i" secondAttribute="trailing" id="D4f-9i-07X"/>
+                            <constraint firstItem="wE2-xo-dOA" firstAttribute="bottom" secondItem="YdO-3e-m0i" secondAttribute="bottom" id="HyE-iL-JQd"/>
+                            <constraint firstItem="YdO-3e-m0i" firstAttribute="top" secondItem="wE2-xo-dOA" secondAttribute="top" id="LH3-bu-M9Z"/>
+                            <constraint firstItem="YdO-3e-m0i" firstAttribute="leading" secondItem="wE2-xo-dOA" secondAttribute="leading" id="le1-G0-WsZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wE2-xo-dOA"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J6c-2A-sOv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2780" y="139"/>
+        </scene>
     </scenes>
     <resources>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
