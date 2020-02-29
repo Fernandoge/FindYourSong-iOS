@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ItunesManagerProtocol {
     func fetchSongs(songName: String)
@@ -94,6 +95,20 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
         }catch {
             print(error.localizedDescription)
             return nil
+        }
+    }
+}
+
+extension UIImageView {
+    func downloadFromURL(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
         }
     }
 }

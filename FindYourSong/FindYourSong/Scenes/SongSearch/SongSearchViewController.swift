@@ -79,6 +79,24 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
         fetchSongs()
     }
     
+    // MARK: Table view
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return displayedSongs.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let displayedSong = displayedSongs[indexPath.row]
+        var cell = tableView.dequeueReusableCell(withIdentifier: "SongCell") as? SongCell
+        if cell == nil {
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "SongCell") as? SongCell
+        }
+        cell?.songNameLabel.text = displayedSong.name
+        cell?.artistNameLabel.text = displayedSong.artistName
+        cell?.albumImage.downloadFromURL(url: URL(string: displayedSong.albumArtworkUrl100)!)
+        return cell!
+    }
+    
     // MARK: Fetch Songs
     
     var displayedSongs: [SongSearch.FetchSongs.ViewModel.DisplayedSong] = []
