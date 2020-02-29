@@ -43,27 +43,51 @@ class SongAlbumInteractorTests: XCTestCase
     
     class SongAlbumPresentationLogicSpy: SongAlbumPresentationLogic
     {
-        var presentSomethingCalled = false
+        var presentFetchedAlbumCalled = false
         
-        func presentSomething(response: SongAlbum.Something.Response)
-        {
-            presentSomethingCalled = true
+        func presentFetchedAlbum(response: SongAlbum.FetchAlbum.Response) {
+            presentFetchedAlbumCalled = true
+        }
+    }
+    
+    class SongAlbumWorkerSpy: SongAlbumWorker {
+        let album = Album(name: "", artistName: "", albumArtworkUrl100: "", songs: [])
+        var fetchAlbumCalled = false
+        
+        override func fetch(albumId: Int) {
+            fetchAlbumCalled = true
+            delegate?.songAlbumWorker(songAlbumWorker: self, didFetchAlbum: album)
         }
     }
     
     // MARK: Tests
     
-    func testDoSomething()
-    {
+    func testFetchAlbumShouldAskWorkerToFetchAlbumWithDelegate() {
         // Given
-        let spy = SongAlbumPresentationLogicSpy()
-        sut.presenter = spy
-        let request = SongAlbum.Something.Request()
+        let songAlbumWorkerSpy = SongAlbumWorkerSpy()
+        sut.worker = songAlbumWorkerSpy
+        let request = SongAlbum.FetchAlbum.Request()
         
         // When
-        sut.doSomething(request: request)
+        sut.fetchAlbum(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
+        XCTAssert(songAlbumWorkerSpy.fetchAlbumCalled, "fetchAlbum should ask the worker to fetch the album")
+        XCTAssertNotNil(sut.worker.delegate, "fetchAlbum should set itself to be delegate to be notified of fetch results")
+    }
+    
+    
+    func testSongAlbumWorkerShouldAskPresenterToPresentFetchedAlbum()
+    {
+        // Given
+        let songAlbumPresentationLogicSpy = SongAlbumPresentationLogicSpy()
+        sut.presenter = songAlbumPresentationLogicSpy
+        let request = SongAlbum.FetchAlbum.Request()
+        
+        // When
+        sut.fetchAlbum(request: request)
+        
+        // Then
+        XCTAssert(songAlbumPresentationLogicSpy.presentFetchedAlbumCalled, "fetch album should ask the presenter to format the result")
     }
 }

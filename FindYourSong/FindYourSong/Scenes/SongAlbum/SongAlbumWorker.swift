@@ -12,9 +12,15 @@
 
 import UIKit
 
+protocol SongAlbumWorkerDelegate {
+    func songAlbumWorker(songAlbumWorker: SongAlbumWorker, didFetchAlbum album: Album)
+}
+
 class SongAlbumWorker
 {
-    func doSomeWork()
+    var delegate: SongAlbumWorkerDelegate?
+    
+    func fetch(albumId: Int)
     {
     }
 }

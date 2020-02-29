@@ -14,7 +14,7 @@ import UIKit
 
 protocol SongAlbumBusinessLogic
 {
-    func doSomething(request: SongAlbum.Something.Request)
+    func fetchAlbum(request: SongAlbum.FetchAlbum.Request)
 }
 
 protocol SongAlbumDataStore
@@ -25,17 +25,16 @@ protocol SongAlbumDataStore
 class SongAlbumInteractor: SongAlbumBusinessLogic, SongAlbumDataStore
 {
     var presenter: SongAlbumPresentationLogic?
-    var worker: SongAlbumWorker?
+    var worker = SongAlbumWorker()
     var albumId: Int = 0
     
     // MARK: Do something
     
-    func doSomething(request: SongAlbum.Something.Request)
+    func fetchAlbum(request: SongAlbum.FetchAlbum.Request)
     {
-        worker = SongAlbumWorker()
-        worker?.doSomeWork()
+        worker.fetch(albumId: albumId)
         
-        let response = SongAlbum.Something.Response()
-        presenter?.presentSomething(response: response)
+        let response = SongAlbum.FetchAlbum.Response()
+        presenter?.presentFetchedAlbum(response: response)
     }
 }

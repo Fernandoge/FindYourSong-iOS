@@ -16,7 +16,7 @@ enum SongAlbum
 {
     // MARK: Use cases
     
-    enum Something
+    enum FetchAlbum
     {
         struct Request
         {
@@ -24,8 +24,14 @@ enum SongAlbum
         struct Response
         {
         }
-        struct ViewModel
-        {
+        struct ViewModel{
+            struct DisplayedAlbum {
+                var name: String
+                var artistName: String
+                var albumArtworkUrl100: String
+                var songs: [Song]
+            }
+            var displayedAlbum: DisplayedAlbum
         }
     }
 }

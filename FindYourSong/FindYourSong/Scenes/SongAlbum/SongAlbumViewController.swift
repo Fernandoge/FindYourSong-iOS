@@ -14,7 +14,7 @@ import UIKit
 
 protocol SongAlbumDisplayLogic: class
 {
-    func displaySomething(viewModel: SongAlbum.Something.ViewModel)
+    func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel)
 }
 
 class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
@@ -78,11 +78,11 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
     
     func doSomething()
     {
-        let request = SongAlbum.Something.Request()
-        interactor?.doSomething(request: request)
+        let request = SongAlbum.FetchAlbum.Request()
+        interactor?.fetchAlbum(request: request)
     }
     
-    func displaySomething(viewModel: SongAlbum.Something.ViewModel)
+    func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel)
     {
         //nameTextField.text = viewModel.name
     }

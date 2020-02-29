@@ -43,27 +43,26 @@ class SongAlbumPresenterTests: XCTestCase
     
     class SongAlbumDisplayLogicSpy: SongAlbumDisplayLogic
     {
-        var displaySomethingCalled = false
+        var displayFetchedAlbum = false
         
-        func displaySomething(viewModel: SongAlbum.Something.ViewModel)
-        {
-            displaySomethingCalled = true
+        func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel) {
+            displayFetchedAlbum = true
         }
     }
     
     // MARK: Tests
     
-    func testPresentSomething()
+    func testPresentFetchedAlbum()
     {
         // Given
-        let spy = SongAlbumDisplayLogicSpy()
-        sut.viewController = spy
-        let response = SongAlbum.Something.Response()
+        let songAlbumDisplayLogic = SongAlbumDisplayLogicSpy()
+        sut.viewController = songAlbumDisplayLogic
+        let response = SongAlbum.FetchAlbum.Response()
         
         // When
-        sut.presentSomething(response: response)
+        sut.presentFetchedAlbum(response: response)
         
         // Then
-        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+        XCTAssertTrue(songAlbumDisplayLogic.displayFetchedAlbum, "presentFetchedAlbum should ask the view controller to display the result")
     }
 }

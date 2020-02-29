@@ -14,7 +14,7 @@ import UIKit
 
 protocol SongAlbumPresentationLogic
 {
-    func presentSomething(response: SongAlbum.Something.Response)
+    func presentFetchedAlbum(response: SongAlbum.FetchAlbum.Response)
 }
 
 class SongAlbumPresenter: SongAlbumPresentationLogic
@@ -23,9 +23,10 @@ class SongAlbumPresenter: SongAlbumPresentationLogic
     
     // MARK: Do something
     
-    func presentSomething(response: SongAlbum.Something.Response)
+    func presentFetchedAlbum(response: SongAlbum.FetchAlbum.Response)
     {
-        let viewModel = SongAlbum.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+        let displayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum(name: "", artistName: "", albumArtworkUrl100: "", songs: [])
+        let viewModel = SongAlbum.FetchAlbum.ViewModel(displayedAlbum: displayedAlbum)
+        viewController?.displayFetchedAlbum(viewModel: viewModel)
     }
 }

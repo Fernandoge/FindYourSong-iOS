@@ -41,7 +41,7 @@ class SongAlbumViewControllerTests: XCTestCase
     {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        sut = storyboard.instantiateViewController(withIdentifier: "SongAlbumViewController") as! SongAlbumViewController
+        sut = storyboard.instantiateViewController(withIdentifier: "SongAlbumViewController") as? SongAlbumViewController
     }
     
     func loadView()
@@ -54,17 +54,26 @@ class SongAlbumViewControllerTests: XCTestCase
     
     class SongAlbumBusinessLogicSpy: SongAlbumBusinessLogic
     {
-        var doSomethingCalled = false
+        var fetchAlbumCalled = false
         
-        func doSomething(request: SongAlbum.Something.Request)
+        func fetchAlbum(request: SongAlbum.FetchAlbum.Request)
         {
-            doSomethingCalled = true
+            fetchAlbumCalled = true
+        }
+    }
+    
+    class TableViewSpy: UITableView {
+        
+        var reloadDataCalled = false
+        
+        override func reloadData() {
+            reloadDataCalled = true
         }
     }
     
     // MARK: Tests
     
-    func testShouldDoSomethingWhenViewIsLoaded()
+    func testShouldFetchAlbumWhenViewIsLoaded()
     {
         // Given
         let spy = SongAlbumBusinessLogicSpy()
@@ -74,19 +83,20 @@ class SongAlbumViewControllerTests: XCTestCase
         loadView()
         
         // Then
-        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(spy.fetchAlbumCalled, "viewDidLoad() should ask the interactor to fetch album")
     }
     
-    func testDisplaySomething()
+    func testShouldDisplayFetchedAlbum()
     {
         // Given
-        let viewModel = SongAlbum.Something.ViewModel()
+        let tableViewSpy = TableViewSpy()
         
         // When
-        loadView()
-        sut.displaySomething(viewModel: viewModel)
+        let displayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum (name: "Rooster", artistName: "Alice in Chains", albumArtworkUrl100: "", songs: [])
+        let viewModel = SongAlbum.FetchAlbum.ViewModel(displayedAlbum: displayedAlbum)
+        sut.displayFetchedAlbum(viewModel: viewModel)
         
         // Then
-        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched album should reload the table view")
     }
 }

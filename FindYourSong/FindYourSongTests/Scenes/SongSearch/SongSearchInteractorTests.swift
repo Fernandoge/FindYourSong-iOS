@@ -66,7 +66,7 @@ class SongSearchInteractorTests: XCTestCase
     
     // MARK: Tests
     
-    func testFetchGistsShouldAskWorkerToFetchSongsWithDelegate()
+    func testFetchSongsShouldAskWorkerToFetchSongsWithDelegate()
     {
         // Given
         let songSearchWorkerSpy = SongSearchWorkerSpy()
