@@ -343,6 +343,11 @@
                         <viewLayoutGuide key="safeArea" id="SNe-LV-17z"/>
                     </view>
                     <navigationItem key="navigationItem" id="juo-Om-Lt3"/>
+                    <connections>
+                        <outlet property="albumImage" destination="ohh-Gn-rn0" id="6vx-E3-EiR"/>
+                        <outlet property="albumNameLabel" destination="Zg9-wJ-fAa" id="FMB-fN-Bzy"/>
+                        <outlet property="artistNameLabel" destination="Dkq-eG-ZxL" id="FFu-aQ-vzC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6c-2A-sOv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

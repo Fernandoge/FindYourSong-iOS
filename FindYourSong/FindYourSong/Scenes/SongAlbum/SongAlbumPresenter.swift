@@ -21,11 +21,12 @@ class SongAlbumPresenter: SongAlbumPresentationLogic
 {
     weak var viewController: SongAlbumDisplayLogic?
     
-    // MARK: Do something
+    // MARK: Fetch Album
     
     func presentFetchedAlbum(response: SongAlbum.FetchAlbum.Response)
     {
-        let displayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum(name: "", artistName: "", albumArtworkUrl100: "", songs: [])
+        let album = response.album
+        let displayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum(name: album.name, artistName: "Album by \(album.artistName)", albumArtworkUrl100: album.albumArtworkUrl100, songs: album.songs)
         let viewModel = SongAlbum.FetchAlbum.ViewModel(displayedAlbum: displayedAlbum)
         viewController?.displayFetchedAlbum(viewModel: viewModel)
     }

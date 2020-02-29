@@ -23,6 +23,7 @@ enum SongAlbum
         }
         struct Response
         {
+            var album: Album
         }
         struct ViewModel{
             struct DisplayedAlbum {

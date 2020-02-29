@@ -69,14 +69,17 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        doSomething()
+        fetchAlbum()
     }
     
-    // MARK: Do something
+    // MARK: Fetch Album
+    var displayedAlbum: SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum(name: "", artistName: "", albumArtworkUrl100: "", songs: [])
     
-    //@IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var albumImage: UIImageView!
+    @IBOutlet weak var albumNameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
     
-    func doSomething()
+    func fetchAlbum()
     {
         let request = SongAlbum.FetchAlbum.Request()
         interactor?.fetchAlbum(request: request)
@@ -84,6 +87,8 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
     
     func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel)
     {
-        //nameTextField.text = viewModel.name
+        displayedAlbum = viewModel.displayedAlbum
+        albumNameLabel.text = displayedAlbum.name
+        artistNameLabel.text = displayedAlbum.artistName
     }
 }

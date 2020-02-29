@@ -22,19 +22,22 @@ protocol SongAlbumDataStore
     var albumId: Int { get set }
 }
 
-class SongAlbumInteractor: SongAlbumBusinessLogic, SongAlbumDataStore
+class SongAlbumInteractor: SongAlbumBusinessLogic, SongAlbumDataStore, SongAlbumWorkerDelegate
 {
     var presenter: SongAlbumPresentationLogic?
     var worker = SongAlbumWorker()
     var albumId: Int = 0
     
-    // MARK: Do something
+    // MARK: Fetch Album
     
     func fetchAlbum(request: SongAlbum.FetchAlbum.Request)
     {
+        worker.delegate = self
         worker.fetch(albumId: albumId)
-        
-        let response = SongAlbum.FetchAlbum.Response()
+    }
+    
+    func songAlbumWorker(songAlbumWorker: SongAlbumWorker, didFetchAlbum album: Album) {
+        let response = SongAlbum.FetchAlbum.Response(album: album)
         presenter?.presentFetchedAlbum(response: response)
     }
 }
