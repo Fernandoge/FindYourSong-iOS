@@ -39,6 +39,9 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
         let urlString = "\(itunesURL)&term=\(songName)"
         let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters:  .urlQueryAllowed)!
         let url = URL(string: encodedUrlString)!
+        
+        dataTask = session.dataTask(with: url)
+        dataTask.resume()
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {

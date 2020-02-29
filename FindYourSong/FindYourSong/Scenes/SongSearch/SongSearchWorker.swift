@@ -16,10 +16,17 @@ protocol SongSearchWorkerDelegate {
     func songSearchWorker(songSearchWorker: SongSearchWorker, didFetchSongs songs: [Song])
 }
 
-class SongSearchWorker
+class SongSearchWorker: ItunesManagerDelegate
 {
+    var itunesManager: ItunesManager = ItunesManager()
     var delegate: SongSearchWorkerDelegate?
     
     func fetch(songName: String){
+        itunesManager.delegate = self
+        itunesManager.fetchSongs(songName: songName)
+    }
+    
+    func itunesManager(itunesManager: ItunesManagerProtocol, didFetchSongs songs: [Song]) {
+        delegate?.songSearchWorker(songSearchWorker: self, didFetchSongs: songs)
     }
 }
