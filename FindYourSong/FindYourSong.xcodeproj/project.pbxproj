@@ -34,6 +34,7 @@
 		6BB2654A2408AB2000929D57 /* SongSearchPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB265462408AB2000929D57 /* SongSearchPresenterTests.swift */; };
 		6BB2654D2408BAC800929D57 /* ItunesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2654C2408BAC800929D57 /* ItunesData.swift */; };
 		6BE757DC2409930600A09F26 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE757DB2409930600A09F26 /* Song.swift */; };
+		6BE757F42409DB8200A09F26 /* ItunesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE757F32409DB8200A09F26 /* ItunesManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		6BB265462408AB2000929D57 /* SongSearchPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearchPresenterTests.swift; sourceTree = "<group>"; };
 		6BB2654C2408BAC800929D57 /* ItunesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesData.swift; sourceTree = "<group>"; };
 		6BE757DB2409930600A09F26 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		6BE757F32409DB8200A09F26 /* ItunesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				6BB2654C2408BAC800929D57 /* ItunesData.swift */,
+				6BE757F32409DB8200A09F26 /* ItunesManager.swift */,
 				6BE757DB2409930600A09F26 /* Song.swift */,
 			);
 			path = Itunes;
@@ -339,6 +342,7 @@
 				6BB2654D2408BAC800929D57 /* ItunesData.swift in Sources */,
 				6BB265412408AACF00929D57 /* SongSearchInteractor.swift in Sources */,
 				6BB2653F2408AACF00929D57 /* SongSearchModels.swift in Sources */,
+				6BE757F42409DB8200A09F26 /* ItunesManager.swift in Sources */,
 				6BB2651A2408855600929D57 /* SendSongViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

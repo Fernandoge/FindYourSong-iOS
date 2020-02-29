@@ -9,5 +9,14 @@
 import Foundation
 
 struct ItunesData: Decodable {
+    let results: [Results]
     
+}
+
+struct Results: Decodable {
+    let trackName: String
+    let artistName: String
+    let collectionCensoredName: String
+    let artworkUrl100: String
+    let previewUrl: String
 }
