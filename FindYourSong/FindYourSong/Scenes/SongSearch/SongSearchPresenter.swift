@@ -32,6 +32,6 @@ class SongSearchPresenter: SongSearchPresentationLogic
     
     private func convertSongs(songs: [Song]) -> [SongSearch.FetchSongs.ViewModel.DisplayedSong]
     {
-        return songs.map { SongSearch.FetchSongs.ViewModel.DisplayedSong(name: $0.name, artistName: $0.artistName, albumNameCensored: $0.albumNameCensored, albumArtworkUrl100: $0.albumArtworkUrl100, previewUrl: $0.previewUrl) }
+        return songs.map { SongSearch.FetchSongs.ViewModel.DisplayedSong(name: $0.name, artistName: $0.artistName, albumArtworkUrl100: $0.albumArtworkUrl100, albumId: $0.albumId) }
     }
 }

@@ -19,4 +19,5 @@ struct Results: Decodable {
     let collectionCensoredName: String
     let artworkUrl100: String
     let previewUrl: String
+    let collectionId: Int
 }

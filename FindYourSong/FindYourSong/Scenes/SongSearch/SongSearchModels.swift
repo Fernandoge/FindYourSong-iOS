@@ -29,9 +29,8 @@ enum SongSearch
             struct DisplayedSong: Equatable {
                 var name: String
                 var artistName: String
-                var albumNameCensored: String
                 var albumArtworkUrl100: String
-                var previewUrl: String
+                var albumId: Int
             }
             var displayedSongs: [DisplayedSong]
         }

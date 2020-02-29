@@ -68,7 +68,29 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
     }
     
     func parseJSONToSong(songsData: Data) -> [Song]? {
-        //
-        return [Song(name: "placeholder", artistName: "placeholder", albumNameCensored: "placeholder", albumArtworkUrl100: "placeholder", previewUrl: "placeholder")]
+        let decoder = JSONDecoder()
+        
+        do {
+            let decodedData = try decoder.decode(ItunesData.self, from: songsData)
+            var songs = [Song]()
+            
+            for result in decodedData.results {
+                let name = result.trackName
+                let artistName = result.artistName
+                let albumArtworkUrl100 = result.artworkUrl100
+                let previewUrl = result.previewUrl
+                let albumId = result.collectionId
+                
+                let songModel = Song(name: name, artistName: artistName, albumArtworkUrl100: albumArtworkUrl100, previewUrl: previewUrl, albumId: albumId)
+                
+                songs.append(songModel)
+            }
+            
+            return songs
+            
+        }catch {
+            print(error.localizedDescription)
+            return nil
+        }
     }
 }
