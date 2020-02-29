@@ -20,6 +20,7 @@ protocol SongSearchBusinessLogic
 protocol SongSearchDataStore
 {
     var songName: String { get set }
+    var songs: [Song]? { get }
 }
 
 class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore, SongSearchWorkerDelegate
@@ -28,6 +29,7 @@ class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore, SongSe
     var presenter: SongSearchPresentationLogic?
     var worker = SongSearchWorker()
     var songName: String = ""
+    var songs: [Song]?
     
     // MARK: Fetch songs
     
@@ -38,6 +40,7 @@ class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore, SongSe
     }
     
     func songSearchWorker(songSearchWorker: SongSearchWorker, didFetchSongs songs: [Song]) {
+        self.songs = songs
         let response = SongSearch.FetchSongs.Response(songs:songs)
         presenter?.presentFetchedSongs(response: response)
     }

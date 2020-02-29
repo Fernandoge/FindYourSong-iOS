@@ -14,7 +14,7 @@ import UIKit
 
 @objc protocol SongSearchRoutingLogic
 {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToSongAlbum(segue: UIStoryboardSegue?)
 }
 
 protocol SongSearchDataPassing
@@ -27,34 +27,35 @@ class SongSearchRouter: NSObject, SongSearchRoutingLogic, SongSearchDataPassing
     weak var viewController: SongSearchViewController?
     var dataStore: SongSearchDataStore?
     
-//    MARK: Routing
-//    
-//    func routeToSomewhere(segue: UIStoryboardSegue?)
-//    {
-//        if let segue = segue {
-//            let destinationVC = segue.destination as! SomewhereViewController
-//            var destinationDS = destinationVC.router!.dataStore!
-//            passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//        } else {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-//            var destinationDS = destinationVC.router!.dataStore!
-//            passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//            navigateToSomewhere(source: viewController!, destination: destinationVC)
-//        }
-//    }
-//    
-//    MARK: Navigation
-//    
-//    func navigateToSomewhere(source: SongSearchViewController, destination: SomewhereViewController)
-//    {
-//        source.show(destination, sender: nil)
-//    }
-//    
-//    MARK: Passing data
-//    
-//    func passDataToSomewhere(source: SongSearchDataStore, destination: inout SomewhereDataStore)
-//    {
-//        destination.name = source.name
-//    }
+    //MARK: Routing
+    
+    func routeToSongAlbum(segue: UIStoryboardSegue?)
+    {
+        if let segue = segue {
+            let destinationVC = segue.destination as! SongAlbumViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToSongAlbum(source: dataStore!, destination: &destinationDS)
+        } else {
+            //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationVC = viewController?.storyboard?.instantiateViewController(withIdentifier: "SongAlbumViewController") as! SongAlbumViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToSongAlbum(source: dataStore!, destination: &destinationDS)
+            navigateToSongAlbum(source: viewController!, destination: destinationVC)
+        }
+    }
+    
+    //MARK: Navigation
+    
+    func navigateToSongAlbum(source: SongSearchViewController, destination: SongAlbumViewController)
+    {
+        source.show(destination, sender: nil)
+    }
+    
+    //MARK: Passing data
+    
+    func passDataToSongAlbum(source: SongSearchDataStore, destination: inout SongAlbumDataStore)
+    {
+        let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row
+        destination.albumId = (source.songs?[selectedRow!].albumId)!
+    }
 }

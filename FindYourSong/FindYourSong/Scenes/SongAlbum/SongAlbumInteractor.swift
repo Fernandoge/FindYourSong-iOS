@@ -19,14 +19,14 @@ protocol SongAlbumBusinessLogic
 
 protocol SongAlbumDataStore
 {
-    //var name: String { get set }
+    var albumId: Int { get set }
 }
 
 class SongAlbumInteractor: SongAlbumBusinessLogic, SongAlbumDataStore
 {
     var presenter: SongAlbumPresentationLogic?
     var worker: SongAlbumWorker?
-    //var name: String = ""
+    var albumId: Int = 0
     
     // MARK: Do something
     
