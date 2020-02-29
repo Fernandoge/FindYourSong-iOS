@@ -96,7 +96,7 @@ class SongSearchViewControllerTests: XCTestCase
         loadView()
         
         // When
-        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumNameCensored: "test", albumArtworkUrl100: "test", previewUrl: "test")]
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
         let viewModel = SongSearch.FetchSongs.ViewModel(displayedSongs: expectedSongs)
         sut.displayFetchedSongs(viewModel: viewModel)
         

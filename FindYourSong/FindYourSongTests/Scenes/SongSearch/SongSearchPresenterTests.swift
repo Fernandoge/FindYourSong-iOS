@@ -59,14 +59,14 @@ class SongSearchPresenterTests: XCTestCase
         // Given
         let songSearchDisplayLogicSpy = SongSearchDisplayLogicSpy()
         sut.viewController = songSearchDisplayLogicSpy
-        let songs = [Song(name: "test", artistName: "test", albumNameCensored: "test", albumArtworkUrl100: "test", previewUrl: "test")]
+        let songs = [Song(name: "test", artistName: "test", albumArtworkUrl100: "test", previewUrl: "test", albumId: 0)]
         let response = SongSearch.FetchSongs.Response(songs: songs)
         
         // When
         sut.presentFetchedSongs(response: response)
         
         // Then
-        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumNameCensored: "test", albumArtworkUrl100: "test", previewUrl: "test")]
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
         let actualSongs = songSearchDisplayLogicSpy.displayFetchedSongsViewModel?.displayedSongs
         XCTAssertTrue(songSearchDisplayLogicSpy.displayFetchedSongsCalled, "presentSomething(response:) should ask the view controller to display the result")
         XCTAssertEqual(actualSongs, expectedSongs, "presentFetchedGists(response:) should display the correct gists")

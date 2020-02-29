@@ -43,7 +43,7 @@ class SongSearchInteractorTests: XCTestCase
     
     class SongSearchWorkerSpy: SongSearchWorker
     {
-        let songs = [Song(name: "test", artistName: "test", albumNameCensored: "test", albumArtworkUrl100: "test", previewUrl: "test")]
+        let songs = [Song(name: "test", artistName: "test", albumArtworkUrl100: "test", previewUrl: "test", albumId: 0)]
         var fetchSongsCalled = false
         
         override func fetch(songName: String) {
