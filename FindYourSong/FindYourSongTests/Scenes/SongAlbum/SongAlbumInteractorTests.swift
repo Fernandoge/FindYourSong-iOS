@@ -80,12 +80,13 @@ class SongAlbumInteractorTests: XCTestCase
     func testSongAlbumWorkerShouldAskPresenterToPresentFetchedAlbum()
     {
         // Given
+        let songAlbumWorkerSpy = SongAlbumWorkerSpy()
+        sut.worker = songAlbumWorkerSpy
         let songAlbumPresentationLogicSpy = SongAlbumPresentationLogicSpy()
         sut.presenter = songAlbumPresentationLogicSpy
-        let request = SongAlbum.FetchAlbum.Request()
         
         // When
-        sut.fetchAlbum(request: request)
+        sut.songAlbumWorker(songAlbumWorker: songAlbumWorkerSpy, didFetchAlbum: songAlbumWorkerSpy.album)
         
         // Then
         XCTAssert(songAlbumPresentationLogicSpy.presentFetchedAlbumCalled, "fetch album should ask the presenter to format the result")

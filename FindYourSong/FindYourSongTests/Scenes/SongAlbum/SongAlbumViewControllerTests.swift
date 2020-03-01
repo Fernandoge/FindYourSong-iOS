@@ -85,18 +85,4 @@ class SongAlbumViewControllerTests: XCTestCase
         // Then
         XCTAssertTrue(spy.fetchAlbumCalled, "viewDidLoad() should ask the interactor to fetch album")
     }
-    
-    func testShouldDisplayFetchedAlbum()
-    {
-        // Given
-        let tableViewSpy = TableViewSpy()
-        
-        // When
-        let displayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum (name: "Rooster", artistName: "Alice in Chains", albumArtworkUrl100: "", songs: [])
-        let viewModel = SongAlbum.FetchAlbum.ViewModel(displayedAlbum: displayedAlbum)
-        sut.displayFetchedAlbum(viewModel: viewModel)
-        
-        // Then
-        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched album should reload the table view")
-    }
 }
