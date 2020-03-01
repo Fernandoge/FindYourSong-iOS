@@ -189,9 +189,34 @@
                             <outlet property="delegate" destination="a9A-q1-f4N" id="vbk-ly-aut"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="mDn-6i-9JL"/>
+                    <navigationItem key="navigationItem" id="mDn-6i-9JL">
+                        <leftBarButtonItems>
+                            <barButtonItem image="magnifyingglass" catalog="system" id="VR9-W6-fZH">
+                                <connections>
+                                    <action selector="searchButtonPressed:" destination="a9A-q1-f4N" id="8XH-Fa-ubl"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem width="50" id="dxH-eS-9hp" userLabel="Separator"/>
+                            <barButtonItem enabled="NO" title="Item" image="arrow.left.circle.fill" catalog="system" id="QwF-7U-ydD">
+                                <connections>
+                                    <action selector="leftArrowButton:" destination="a9A-q1-f4N" id="y9M-ay-azE"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem width="50" id="FZB-qd-SWD" userLabel="Separator"/>
+                            <barButtonItem width="41" id="C83-ol-TK1" userLabel="Separator"/>
+                            <barButtonItem enabled="NO" image="arrow.right.circle.fill" catalog="system" id="cKi-Bi-HAt">
+                                <connections>
+                                    <action selector="rightArrowButton:" destination="a9A-q1-f4N" id="1hZ-8b-UEx"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="tpu-Gi-b1i" id="yTE-i6-H5B"/>
+                        <outlet property="leftArrowButton" destination="QwF-7U-ydD" id="ig9-FF-MHz"/>
+                        <outlet property="rightArrowButton" destination="cKi-Bi-HAt" id="b91-6t-KRN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aUQ-7U-uM4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -347,7 +372,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Q5a-CD-ykv"/>
                     </view>
-                    <navigationItem key="navigationItem" id="juo-Om-Lt3"/>
+                    <navigationItem key="navigationItem" id="juo-Om-Lt3">
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q61-6o-GwV" userLabel="Home">
+                            <rect key="frame" x="188" y="7" width="41" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                            <inset key="titleEdgeInsets" minX="-9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" image="magnifyingglass" catalog="system"/>
+                            <connections>
+                                <action selector="searchButtonPressed:" destination="oXu-5g-NJ7" eventType="touchUpInside" id="FVO-1E-5tQ"/>
+                            </connections>
+                        </button>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="aPH-PP-cer" id="mRa-Tb-AjC"/>
                         <outlet property="albumImage" destination="jwF-ZS-akx" id="BEN-Yv-228"/>
@@ -360,10 +397,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6c-2A-sOv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2655" y="139"/>
+            <point key="canvasLocation" x="2653.6231884057975" y="138.61607142857142"/>
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.left.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="arrow.right.circle.fill" catalog="system" width="64" height="60"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="music.house" catalog="system" width="64" height="52"/>
         <image name="music.note.list" catalog="system" width="64" height="56"/>

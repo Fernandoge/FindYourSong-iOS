@@ -71,6 +71,12 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         }
     }
     
+    // MARK: Return to search
+    
+    @IBAction func searchButtonPressed(_ sender: UIButton) {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
     // MARK: View lifecycle
     
     override func viewDidLoad()

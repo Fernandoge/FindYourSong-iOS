@@ -112,9 +112,24 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
     {
         fetchedSongs = viewModel.fetchedSongs
+    // MARK: Songs pagination
+    
+    @IBOutlet weak var leftArrowButton: UIBarButtonItem!
+    @IBOutlet weak var rightArrowButton: UIBarButtonItem!
         tableView.reloadData()
         DispatchQueue.main.async {
             self.activityIndicator?.stopAnimating()
         }
     }
+    
+    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func leftArrowButton(_ sender: UIBarButtonItem) {
+    }
+    
+    @IBAction func rightArrowButton(_ sender: UIBarButtonItem) {
+    }
+    
 }
