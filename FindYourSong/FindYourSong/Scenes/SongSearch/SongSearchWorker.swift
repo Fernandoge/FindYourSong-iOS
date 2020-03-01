@@ -18,7 +18,7 @@ protocol SongSearchWorkerDelegate {
 
 class SongSearchWorker: ItunesManagerDelegate
 {
-    var itunesManager: ItunesManager = ItunesManager()
+    var itunesManager: ItunesManager = ItunesManager(fetchingSongs: true)
     var delegate: SongSearchWorkerDelegate?
     
     func fetch(songName: String){

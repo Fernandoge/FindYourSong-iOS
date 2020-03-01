@@ -16,14 +16,24 @@ protocol ItunesManagerProtocol {
 
 protocol ItunesManagerDelegate {
     func itunesManager(itunesManager: ItunesManagerProtocol, didFetchSongs songs: [Song])
+    func itunesManager(itunesManager: ItunesManagerProtocol, didFetchAlbum album: Album)
 }
 
 class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, URLSessionTaskDelegate {
+    var fetchingSongs: Bool = false
+    var fetchingAlbum: Bool = false
     
-    let itunesURL = "https://itunes.apple.com/search?mediaType=music"
-    
+    let itunesURL = "https://itunes.apple.com/"
     var delegate: ItunesManagerDelegate?
-
+    
+    init(fetchingSongs: Bool) {
+        self.fetchingSongs = fetchingSongs
+    }
+    
+    init(fetchingAlbum: Bool) {
+        self.fetchingAlbum = fetchingAlbum
+    }
+    
     lazy var session: URLSession = {
         let config = URLSessionConfiguration.default
         if let delegate = self.delegate {
@@ -37,10 +47,17 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
     var results = [String: NSMutableData]()
     
     func fetchSongs(songName: String) {
-        let urlString = "\(itunesURL)&term=\(songName)"
+        let urlString = "\(itunesURL)search?media=music&term=\(songName)"
         let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters:  .urlQueryAllowed)!
         let url = URL(string: encodedUrlString)!
         
+        dataTask = session.dataTask(with: url)
+        dataTask.resume()
+    }
+    
+    func fetchAlbum(albumId: Int) {
+        let urlString = "\(itunesURL)lookup?entity=song&id=\(albumId)"
+        let url = URL(string: urlString)!
         dataTask = session.dataTask(with: url)
         dataTask.resume()
     }
@@ -58,15 +75,30 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let _ = error {
-            delegate?.itunesManager(itunesManager: self, didFetchSongs: [])
+            if fetchingSongs {
+                delegate?.itunesManager(itunesManager: self, didFetchSongs: [])
+            } else if fetchingAlbum {
+                delegate?.itunesManager(itunesManager: self, didFetchAlbum: Album(name: "", artistName: "", albumArtworkUrl100: "", songs: []))
+            }
         } else {
             let key = String(task.taskIdentifier)
             if let result = results[key] as Data? {
-                if let songs = self.parseJSONToSong(songsData: result) {
-                    delegate?.itunesManager(itunesManager: self, didFetchSongs: songs)
+                if fetchingSongs {
+                    if let songs = self.parseJSONToSong(songsData: result) {
+                        delegate?.itunesManager(itunesManager: self, didFetchSongs: songs)
+                    }
+                } else if fetchingAlbum {
+                    if let album = self.parseJSONToAlbum(albumData: result) {
+                        delegate?.itunesManager(itunesManager: self, didFetchAlbum: album)
+                    }
                 }
+                
             } else {
-                delegate?.itunesManager(itunesManager: self, didFetchSongs: [])
+                if fetchingSongs {
+                    delegate?.itunesManager(itunesManager: self, didFetchSongs: [])
+                } else if fetchingAlbum {
+                    delegate?.itunesManager(itunesManager: self, didFetchAlbum: Album(name: "", artistName: "", albumArtworkUrl100: "", songs: []))
+                }
             }
         }
     }
@@ -76,19 +108,7 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
         
         do {
             let decodedData = try decoder.decode(ItunesData.self, from: songsData)
-            var songs = [Song]()
-            
-            for result in decodedData.results {
-                let name = result.trackName
-                let artistName = result.artistName
-                let albumArtworkUrl100 = result.artworkUrl100
-                let previewUrl = result.previewUrl
-                let albumId = result.collectionId
-                
-                let songModel = Song(name: name, artistName: artistName, albumArtworkUrl100: albumArtworkUrl100, previewUrl: previewUrl, albumId: albumId)
-                
-                songs.append(songModel)
-            }
+            let songs = loopDataForSongs(data: decodedData)
             
             return songs
             
@@ -96,6 +116,63 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
             print(error.localizedDescription)
             return nil
         }
+    }
+    
+    func parseJSONToAlbum(albumData: Data) -> Album? {
+        let decoder = JSONDecoder()
+        
+        do {
+            var decodedData = try decoder.decode(ItunesData.self, from: albumData)
+            
+            //JSON first element contains album data
+            let name = decodedData.results[0].collectionCensoredName
+            let artistName = decodedData.results[0].artistName
+            let albumArtworkUrl100 = decodedData.results[0].artworkUrl100
+            
+            //Removing first element so now results are only songs
+            decodedData.results.remove(at: 0)
+            
+            let songs = loopDataForSongs(data: decodedData)
+
+            let album = Album(name: name, artistName: artistName, albumArtworkUrl100: albumArtworkUrl100, songs: songs)
+            
+            return album
+            
+        }catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    func loopDataForSongs(data: ItunesData) -> [Song] {
+        var songs = [Song]()
+        
+        for result in data.results {
+            let name = result.trackName!
+            let artistName = result.artistName
+            let albumArtworkUrl100 = result.artworkUrl100
+            let previewUrl = result.previewUrl!
+            let albumId = result.collectionId
+            
+            let songModel = Song(name: name, artistName: artistName, albumArtworkUrl100: albumArtworkUrl100, previewUrl: previewUrl, albumId: albumId)
+            
+            songs.append(songModel)
+            
+        }
+        
+        return songs
+        
+    }
+
+
+}
+
+extension ItunesManagerDelegate {
+    func itunesManager(itunesManager: ItunesManagerProtocol, didFetchSongs songs: [Song]) {
+        //Just to make the method optional
+    }
+    func itunesManager(itunesManager: ItunesManagerProtocol, didFetchAlbum album: Album) {
+        //Just to make the method optional
     }
 }
 

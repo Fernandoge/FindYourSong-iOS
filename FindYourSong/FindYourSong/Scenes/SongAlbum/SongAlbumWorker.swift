@@ -18,15 +18,15 @@ protocol SongAlbumWorkerDelegate {
 
 class SongAlbumWorker: ItunesManagerDelegate
 {
-    var itunesManager: ItunesManager = ItunesManager()
+    var itunesManager: ItunesManager = ItunesManager(fetchingAlbum: true)
     var delegate: SongAlbumWorkerDelegate?
     
     func fetch(albumId: Int) {
         itunesManager.delegate = self
-        //itunesManager.fetchAlbum(albumId: albumId)
+        itunesManager.fetchAlbum(albumId: albumId)
     }
     
-//    func itunesManager(itunesManager: ItunesManagerProtocol, didFetchAlbum album: Album) {
-//         delegate?.songAlbumWorker(songAlbumWorker: self, didFetchAlbum: album)
-//    }
+    func itunesManager(itunesManager: ItunesManagerProtocol, didFetchAlbum album: Album) {
+         delegate?.songAlbumWorker(songAlbumWorker: self, didFetchAlbum: album)
+    }
 }
