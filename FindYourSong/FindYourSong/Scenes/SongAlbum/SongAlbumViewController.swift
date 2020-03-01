@@ -12,12 +12,19 @@
 
 import UIKit
 
+// MARK: Album Song Cell
+class AlbumSongCell: UITableViewCell {
+    @IBOutlet weak var songNameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
+    
+}
+
 protocol SongAlbumDisplayLogic: class
 {
     func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel)
 }
 
-class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
+class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableViewDataSource, UITableViewDelegate
 {
     var interactor: SongAlbumBusinessLogic?
     var router: (NSObjectProtocol & SongAlbumRoutingLogic & SongAlbumDataPassing)?
@@ -70,6 +77,30 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
     {
         super.viewDidLoad()
         fetchAlbum()
+        songsTableView.dataSource = self
+        songsTableView.delegate = self
+    }
+    
+    // MARK: Songs table view
+        
+    @IBOutlet weak var songsTableView: UITableView!
+    
+    var indexPlaying: Int = -1
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return displayedAlbum.songs.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let displayedSong = displayedAlbum.songs[indexPath.row]
+        var cell = tableView.dequeueReusableCell(withIdentifier: "AlbumSongCell") as? AlbumSongCell
+        if cell == nil {
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "AlbumSongCell") as? AlbumSongCell
+        }
+        
+        cell?.songNameLabel.text = displayedSong.name
+        cell?.artistNameLabel.text = displayedSong.artistName
+        return cell!
     }
     
     // MARK: Fetch Album
@@ -88,7 +119,9 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic
     func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel)
     {
         displayedAlbum = viewModel.displayedAlbum
+        albumImage.downloadFromURL(url: URL(string: displayedAlbum.albumArtworkUrl100)!)
         albumNameLabel.text = displayedAlbum.name
         artistNameLabel.text = displayedAlbum.artistName
+        songsTableView.reloadData()
     }
 }
