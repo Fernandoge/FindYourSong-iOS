@@ -332,6 +332,7 @@
                         <outlet property="albumImage" destination="jwF-ZS-akx" id="BEN-Yv-228"/>
                         <outlet property="albumNameLabel" destination="b7s-4N-JMt" id="o55-bT-Bj3"/>
                         <outlet property="artistNameLabel" destination="7x8-x6-Fek" id="Fo8-L1-tkT"/>
+                        <outlet property="songProgressBar" destination="Jnj-CO-xgy" id="CnD-Oq-RKX"/>
                         <outlet property="songsTableView" destination="T5J-Yc-nHb" id="I2R-FG-VfQ"/>
                     </connections>
                 </viewController>

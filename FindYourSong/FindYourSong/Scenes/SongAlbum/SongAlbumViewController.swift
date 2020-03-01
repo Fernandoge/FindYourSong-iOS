@@ -11,12 +11,12 @@
 //
 
 import UIKit
+import AVFoundation
 
 // MARK: Album Song Cell
 class AlbumSongCell: UITableViewCell {
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
-    
 }
 
 protocol SongAlbumDisplayLogic: class
@@ -81,11 +81,13 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         songsTableView.delegate = self
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        resetPlayer()
+    }
+    
     // MARK: Songs table view
         
     @IBOutlet weak var songsTableView: UITableView!
-    
-    var indexPlaying: Int = -1
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayedAlbum.songs.count
@@ -103,12 +105,61 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        selectedCell?.isSelected = false
+        playSongPreview(songPreviewUrl: displayedAlbum.songs[indexPath.row].previewUrl)
+    }
+    
+    // MARK: Play song
+    
+    var player = AVPlayer()
+    var timer = Timer()
+    var totalSeconds: Double = 0
+    
+    @IBOutlet weak var songProgressBar: UIProgressView!
+    
+    func playSongPreview(songPreviewUrl: String) {
+        timer.invalidate()
+        songProgressBar.isHidden = false
+        
+        if let url = URL(string: songPreviewUrl) {
+            player = AVPlayer(url: url)
+            player.volume = 1.0
+            player.play()
+        }
+        
+        if let songTotalDuration = player.currentItem?.asset.duration {
+            totalSeconds = CMTimeGetSeconds(songTotalDuration)
+        }
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressBar), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateProgressBar() {
+        if songProgressBar.progress == 1 {
+            resetPlayer()
+        } else {
+            let songSecondsPassed = CMTimeGetSeconds(player.currentTime())
+            let percentageProgress = songSecondsPassed / totalSeconds
+            songProgressBar.progress = Float(percentageProgress)
+        }
+    }
+    
+    func resetPlayer() {
+        songProgressBar.progress = 0
+        songProgressBar.isHidden = true
+        timer.invalidate()
+        player.pause()
+    }
+    
     // MARK: Fetch Album
-    var displayedAlbum: SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum(name: "", artistName: "", albumArtworkUrl100: "", songs: [])
     
     @IBOutlet weak var albumImage: UIImageView!
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
+    
+    var displayedAlbum: SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum = SongAlbum.FetchAlbum.ViewModel.DisplayedAlbum(name: "", artistName: "", albumArtworkUrl100: "", songs: [])
     
     func fetchAlbum()
     {
