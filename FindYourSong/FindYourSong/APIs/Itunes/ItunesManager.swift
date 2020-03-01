@@ -47,7 +47,7 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
     var results = [String: NSMutableData]()
     
     func fetchSongs(songName: String) {
-        let urlString = "\(itunesURL)search?media=music&term=\(songName)"
+        let urlString = "\(itunesURL)search?media=music&limit=100&term=\(songName)"
         let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters:  .urlQueryAllowed)!
         let url = URL(string: encodedUrlString)!
         
@@ -148,7 +148,7 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
         var songs = [Song]()
         
         for result in data.results {
-            let name = result.trackName!
+            let name = result.trackCensoredName!
             let artistName = result.artistName
             let albumArtworkUrl100 = result.artworkUrl100
             let previewUrl = result.previewUrl!

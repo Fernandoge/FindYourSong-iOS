@@ -14,7 +14,7 @@ struct ItunesData: Decodable {
 }
 
 struct Results: Decodable {
-    let trackName: String?
+    let trackCensoredName: String?
     let artistName: String
     let collectionCensoredName: String
     let artworkUrl100: String
