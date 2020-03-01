@@ -12,6 +12,7 @@
 
 import UIKit
 import AVFoundation
+import Cache
 
 // MARK: Album Song Cell
 class AlbumSongCell: UITableViewCell {
@@ -119,7 +120,7 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
     
     // MARK: Play song
     
-    var player = AVPlayer()
+    var audioPlayer = AudioPlayer()
     var timer = Timer()
     var totalSeconds: Double = 0
     var playerPaused = true
@@ -131,12 +132,10 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         timer.invalidate()
         
         if let url = URL(string: songPreviewUrl) {
-            player = AVPlayer(url: url)
-            player.volume = 1.0
-            player.play()
+            audioPlayer.play(with: url)
         }
-        
-        if let songTotalDuration = player.currentItem?.asset.duration {
+
+        if let songTotalDuration = audioPlayer.player.currentItem?.asset.duration {
             totalSeconds = CMTimeGetSeconds(songTotalDuration)
             if totalSeconds > 0 {
                 songProgressBar.isHidden = false
@@ -153,7 +152,7 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         if songProgressBar.progress == 1 {
             resetPlayer()
         } else {
-            let songSecondsPassed = CMTimeGetSeconds(player.currentTime())
+            let songSecondsPassed = CMTimeGetSeconds(audioPlayer.player.currentTime())
             let percentageProgress = songSecondsPassed / totalSeconds
             songProgressBar.progress = Float(percentageProgress)
         }
@@ -163,11 +162,11 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         if playerPaused {
             playerPaused = false
             playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            player.play()
+            audioPlayer.player.play()
         } else {
             playerPaused = true
             playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            player.pause()
+            audioPlayer.player.pause()
         }
     }
     
@@ -176,7 +175,7 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         songProgressBar.isHidden = true
         playButton.isHidden = true
         timer.invalidate()
-        player.pause()
+        audioPlayer.player.pause()
     }
     
     // MARK: Fetch Album
