@@ -31,8 +31,28 @@ class SongSearchPresenter: SongSearchPresentationLogic
         viewController?.getFetchedSongs(viewModel: viewModel)
     }
     
-    private func convertSongs(songs: [Song]) -> [SongSearch.FetchSongs.ViewModel.FetchedSong]
+    func presentFilteredSongs(response: SongSearch.SongsPagination.Response) {
+        let leftArrowStatus = response.leftArrowStatus
+        let rightArrowStatus = response.rightArrowStatus
+        var navigationBarTitle: String
+        if (response.filteredSongs.count > 0) {
+            navigationBarTitle = "Page \(response.currentPage)"
+        } else {
+            navigationBarTitle = "No results :("
+        }
+        let filteredSongs = convertFilteredSongs(songs: response.filteredSongs)
+        
+        let viewModel = SongSearch.SongsPagination.ViewModel(displayedSongs: filteredSongs, title: navigationBarTitle, leftArrowStatus: leftArrowStatus, rightArrowStatus: rightArrowStatus)
+        viewController?.displayFilteredSongs(viewModel: viewModel)
+    }
+    
+    private func convertFetchedSongs(songs: [Song]) -> [SongSearch.FetchSongs.ViewModel.FetchedSong]
     {
         return songs.map { SongSearch.FetchSongs.ViewModel.FetchedSong(name: $0.name, artistName: $0.artistName, albumArtworkUrl100: $0.albumArtworkUrl100, albumId: $0.albumId) }
+    }
+    
+    private func convertFilteredSongs(songs: [Song]) -> [SongSearch.SongsPagination.ViewModel.DisplayedSong]
+    {
+        return songs.map { SongSearch.SongsPagination.ViewModel.DisplayedSong(name: $0.name, artistName: $0.artistName, albumArtworkUrl100: $0.albumArtworkUrl100, albumId: $0.albumId) }
     }
 }

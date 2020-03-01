@@ -146,9 +146,13 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     }
     
     @IBAction func leftArrowButton(_ sender: UIBarButtonItem) {
+        currentPage -= 1
+        filterSongs()
     }
     
     @IBAction func rightArrowButton(_ sender: UIBarButtonItem) {
+        currentPage += 1
+        filterSongs()
     }
     
 }

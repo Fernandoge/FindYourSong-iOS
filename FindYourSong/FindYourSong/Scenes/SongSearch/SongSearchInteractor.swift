@@ -45,4 +45,39 @@ class SongSearchInteractor: SongSearchBusinessLogic, SongSearchDataStore, SongSe
         presenter?.presentFetchedSongs(response: response)
     }
     
+    // MARK: Songs pagination
+    
+    func filterSongs(request: SongSearch.SongsPagination.Request) {
+        let fetchedSongs = request.fetchedSongs
+        let currentPage = request.currentPage
+        let songsPerPage = request.songsPerPage
+        
+        var filteredSongs: [Song] = []
+        let lastElement = songsPerPage * currentPage
+        let startingElement = lastElement - songsPerPage
+        var rightArrowStatus = true
+        var leftArrowStatus = true
+        
+        if currentPage == 1 {
+            leftArrowStatus = false
+        }
+        
+        if lastElement >= fetchedSongs.count {
+            rightArrowStatus = false
+        }
+        
+        for i in startingElement..<lastElement {
+            if i >= fetchedSongs.count {
+                break
+            } else {
+                let song = fetchedSongs[i]
+                let newSong = Song(name: song.name, artistName: song.artistName, albumArtworkUrl100: song.albumArtworkUrl100, previewUrl: song.albumArtworkUrl100, albumId: song.albumId)
+                
+                filteredSongs.append(newSong)
+            }
+        }
+    
+        selectableSongs = filteredSongs
+        presenter?.presentFilteredSongs(response: SongSearch.SongsPagination.Response(filteredSongs: filteredSongs, currentPage: currentPage, leftArrowStatus: leftArrowStatus, rightArrowStatus: rightArrowStatus))
+    }
 }
