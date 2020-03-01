@@ -15,6 +15,7 @@ import UIKit
 protocol SongSearchPresentationLogic
 {
     func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
+    func presentFilteredSongs(response: SongSearch.SongsPagination.Response)
 }
 
 class SongSearchPresenter: SongSearchPresentationLogic
@@ -25,7 +26,7 @@ class SongSearchPresenter: SongSearchPresentationLogic
     
     func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
     {
-        let displayedSongs = convertSongs(songs: response.songs)
+        let displayedSongs = convertFetchedSongs(songs: response.songs)
         let viewModel = SongSearch.FetchSongs.ViewModel(fetchedSongs: displayedSongs)
         viewController?.getFetchedSongs(viewModel: viewModel)
     }
