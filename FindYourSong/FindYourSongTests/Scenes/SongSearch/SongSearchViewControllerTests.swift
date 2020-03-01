@@ -66,11 +66,17 @@ class SongSearchViewControllerTests: XCTestCase
     
     class SongSearchBusinessLogicSpy: SongSearchBusinessLogic
     {
-        var fetchSongs = false
+        var fetchSongsCalled = false
         
         func fetchSongs(request: SongSearch.FetchSongs.Request)
         {
-            fetchSongs = true
+            fetchSongsCalled = true
+        }
+        
+        var filterSongsCalled = false
+        
+        func filterSongs(request: SongSearch.SongsPagination.Request) {
+            filterSongsCalled = true
         }
     }
     
@@ -86,23 +92,36 @@ class SongSearchViewControllerTests: XCTestCase
         loadView()
         
         // Then
-        XCTAssertTrue(songSearchBusinessLogicSpy.fetchSongs, "viewDidLoad() should ask the interactor fetch songs")
+        XCTAssertTrue(songSearchBusinessLogicSpy.fetchSongsCalled, "viewDidLoad() should ask the interactor fetch songs")
     }
     
-    func testDisplayFetchedSongsShouldReloadTableView() {
+    func testGetFetchedSongsShouldReloadTableView() {
         // Given
         let tableViewSpy = TableViewSpy()
         sut.tableView = tableViewSpy
         loadView()
         
         // When
-        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
-        let viewModel = SongSearch.FetchSongs.ViewModel(displayedSongs: expectedSongs)
-        sut.displayFetchedSongs(viewModel: viewModel)
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.FetchedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
+        let viewModel = SongSearch.FetchSongs.ViewModel(fetchedSongs: expectedSongs)
+        sut.getFetchedSongs(viewModel: viewModel)
         
         // Then
-        let actualSongs = sut.displayedSongs
-        XCTAssertEqual(actualSongs, expectedSongs, "displayFetchedSongs(viewModel:) should display the songs results")
-        XCTAssert(tableViewSpy.reloadDataCalled, "displayFetchedSongs(viewModel:) should reload the table view")
+        let actualSongs = sut.fetchedSongs
+        XCTAssertEqual(actualSongs, expectedSongs, "getFetchedSongs(viewModel:) should display the songs results")
+        XCTAssert(tableViewSpy.reloadDataCalled, "getFetchedSongs(viewModel:) should reload the table view")
+    }
+    
+    func testShouldFilterSongsAfterGettingFetchedSongs() {
+        // Given
+        let songSearchBusinessLogicSpy = SongSearchBusinessLogicSpy()
+        sut.interactor = songSearchBusinessLogicSpy
+        let viewModel = SongSearch.FetchSongs.ViewModel(fetchedSongs: [SongSearch.FetchSongs.ViewModel.FetchedSong(name: "", artistName: "", albumArtworkUrl100: "", albumId: 0)])
+        
+        // When
+        sut.getFetchedSongs(viewModel: viewModel)
+        
+        // Then
+        XCTAssert(songSearchBusinessLogicSpy.filterSongsCalled, "getFetchedSongs(viewModel:) should ask the interactor to filter songs")
     }
 }

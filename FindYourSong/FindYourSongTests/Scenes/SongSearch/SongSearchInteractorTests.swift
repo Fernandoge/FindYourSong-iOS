@@ -55,12 +55,18 @@ class SongSearchInteractorTests: XCTestCase
     
     class SongSearchPresentationLogicSpy: SongSearchPresentationLogic
     {
+        
         var presentFetchedSongsCalled = false
         
         func presentFetchedSongs(response: SongSearch.FetchSongs.Response) {
             presentFetchedSongsCalled = true
         }
         
+        var presentFilteredSongsCalled = false
+        
+        func presentFilteredSongs(response: SongSearch.SongsPagination.Response) {
+            presentFilteredSongsCalled = true
+        }
         
     }
     
@@ -71,6 +77,8 @@ class SongSearchInteractorTests: XCTestCase
         // Given
         let songSearchWorkerSpy = SongSearchWorkerSpy()
         sut.worker = songSearchWorkerSpy
+        let songSearchPresentationLogicSpy = SongSearchPresentationLogicSpy()
+        sut.presenter = songSearchPresentationLogicSpy
         let request = SongSearch.FetchSongs.Request()
         
         // When
@@ -78,6 +86,20 @@ class SongSearchInteractorTests: XCTestCase
         
         // Then
         XCTAssertTrue(songSearchWorkerSpy.fetchSongsCalled, "fetchSongs(request:) should ask the worker to fetch the songs")
+        XCTAssertTrue(songSearchPresentationLogicSpy.presentFetchedSongsCalled, "fetchSongs(request:) should ask the presenter to present the songs")
         XCTAssertNotNil(sut.worker.delegate, "fetchSongs(request:) should set itself to be delegate to be notified of fetch results")
+    }
+    
+    func testFilterSongsShouldAskPresenterToPresentFilteredSongs() {
+        // Given
+        let songSearchPresentationLogicSpy = SongSearchPresentationLogicSpy()
+        sut.presenter = songSearchPresentationLogicSpy
+        let request = SongSearch.SongsPagination.Request(fetchedSongs: [], currentPage: 0, songsPerPage: 0)
+        
+        // When
+        sut.filterSongs(request: request)
+        
+        // then
+        XCTAssert(songSearchPresentationLogicSpy.presentFilteredSongsCalled, "filterSongs(request:) should ask the presenter to present the songs")
     }
 }

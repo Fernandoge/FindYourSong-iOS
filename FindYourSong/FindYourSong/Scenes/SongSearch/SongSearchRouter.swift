@@ -56,6 +56,6 @@ class SongSearchRouter: NSObject, SongSearchRoutingLogic, SongSearchDataPassing
     func passDataToSongAlbum(source: SongSearchDataStore, destination: inout SongAlbumDataStore)
     {
         let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row
-        destination.albumId = (source.songs?[selectedRow!].albumId)!
+        destination.albumId = (source.selectableSongs?[selectedRow!].albumId)!
     }
 }

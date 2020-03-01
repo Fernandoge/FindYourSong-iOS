@@ -21,7 +21,8 @@ class SongCell: UITableViewCell {
 
 protocol SongSearchDisplayLogic: class
 {
-    func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
+    func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
+    func displayFilteredSongs(viewModel: SongSearch.SongsPagination.ViewModel)
 }
 
 class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
@@ -98,9 +99,10 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     }
     
     // MARK: Fetch Songs
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var displayedSongs: [SongSearch.FetchSongs.ViewModel.DisplayedSong] = []
+    var fetchedSongs: [SongSearch.FetchSongs.ViewModel.FetchedSong] = []
     
     func fetchSongs()
     {
@@ -108,12 +110,49 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
         interactor?.fetchSongs(request: request)
     }
     
-    func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
+    func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
     {
+        fetchedSongs = viewModel.fetchedSongs
+        filterSongs()
+    }
+    
+    // MARK: Songs pagination
+    
+    @IBOutlet weak var leftArrowButton: UIBarButtonItem!
+    @IBOutlet weak var rightArrowButton: UIBarButtonItem!
+    
+    var displayedSongs: [SongSearch.SongsPagination.ViewModel.DisplayedSong] = []
+    var currentPage: Int = 1
+    var songsPerPage: Int = 20
+    
+    func filterSongs() {
+        let request = SongSearch.SongsPagination.Request(fetchedSongs: fetchedSongs, currentPage: currentPage, songsPerPage: songsPerPage)
+        interactor?.filterSongs(request: request)
+    }
+    
+    func displayFilteredSongs(viewModel: SongSearch.SongsPagination.ViewModel) {
         displayedSongs = viewModel.displayedSongs
+        leftArrowButton.isEnabled = viewModel.leftArrowStatus
+        rightArrowButton.isEnabled = viewModel.rightArrowStatus
+        title = viewModel.title
         tableView.reloadData()
         DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
+            self.activityIndicator?.stopAnimating()
         }
     }
+    
+    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func leftArrowButton(_ sender: UIBarButtonItem) {
+        currentPage -= 1
+        filterSongs()
+    }
+    
+    @IBAction func rightArrowButton(_ sender: UIBarButtonItem) {
+        currentPage += 1
+        filterSongs()
+    }
+    
 }

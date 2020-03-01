@@ -43,18 +43,26 @@ class SongSearchPresenterTests: XCTestCase
     
     class SongSearchDisplayLogicSpy: SongSearchDisplayLogic
     {
-        var displayFetchedSongsCalled = false
-        var displayFetchedSongsViewModel: SongSearch.FetchSongs.ViewModel?
         
-        func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel) {
-            displayFetchedSongsCalled = true
-            displayFetchedSongsViewModel = viewModel
+        var getFetchedSongsCalled = false
+        var getFetchedSongsViewModel: SongSearch.FetchSongs.ViewModel?
+        
+        func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel) {
+            getFetchedSongsCalled = true
+            getFetchedSongsViewModel = viewModel
+        }
+        
+        var displayFilteredSongsCalled = false
+        var displayFilteredSongsViewModel: SongSearch.SongsPagination.ViewModel?
+        func displayFilteredSongs(viewModel: SongSearch.SongsPagination.ViewModel) {
+            displayFilteredSongsCalled = true
+            displayFilteredSongsViewModel = viewModel
         }
     }
     
     // MARK: Tests
     
-    func testPresentFetchedSongsShouldAskViewControllerToFetchSongs()
+    func testPresentFetchedSongsShouldAskViewControllerToGetFetchSongs()
     {
         // Given
         let songSearchDisplayLogicSpy = SongSearchDisplayLogicSpy()
@@ -66,9 +74,27 @@ class SongSearchPresenterTests: XCTestCase
         sut.presentFetchedSongs(response: response)
         
         // Then
-        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
-        let actualSongs = songSearchDisplayLogicSpy.displayFetchedSongsViewModel?.displayedSongs
-        XCTAssertTrue(songSearchDisplayLogicSpy.displayFetchedSongsCalled, "presentSomething(response:) should ask the view controller to display the result")
-        XCTAssertEqual(actualSongs, expectedSongs, "presentFetchedGists(response:) should display the correct gists")
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.FetchedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
+        let actualSongs = songSearchDisplayLogicSpy.getFetchedSongsViewModel?.fetchedSongs
+        XCTAssertTrue(songSearchDisplayLogicSpy.getFetchedSongsCalled, "presentFetchedSongs(response:) should ask the view controller to display the result")
+        XCTAssertEqual(actualSongs, expectedSongs, "presentFetchedSongs(response:) should display the correct songs")
+    }
+    
+    func testPresentFilteredSongsShouldAskViewControllerToDisplayFilteredSongs() {
+        // Given
+        let songSearchDisplayLogicSpy = SongSearchDisplayLogicSpy()
+        sut.viewController = songSearchDisplayLogicSpy
+        let songs = [Song(name: "test", artistName: "test", albumArtworkUrl100: "test", previewUrl: "test", albumId: 0)]
+        let response = SongSearch.SongsPagination.Response(filteredSongs: songs, currentPage: 0, leftArrowStatus: true, rightArrowStatus: true)
+        
+        // Then
+        sut.presentFilteredSongs(response: response)
+        
+        // Then
+        let expectedSongs = [SongSearch.SongsPagination.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
+        let actualSong = songSearchDisplayLogicSpy.displayFilteredSongsViewModel?.displayedSongs
+        XCTAssert(songSearchDisplayLogicSpy.displayFilteredSongsCalled, "presentFilteredSongs(response:) should ask the view controller to display the result")
+        XCTAssertEqual(actualSong, expectedSongs, "presentFilteredSogns(response:) should display the correct songs")
+        
     }
 }
