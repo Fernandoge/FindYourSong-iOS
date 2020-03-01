@@ -26,12 +26,12 @@ class SongSearchPresenter: SongSearchPresentationLogic
     func presentFetchedSongs(response: SongSearch.FetchSongs.Response)
     {
         let displayedSongs = convertSongs(songs: response.songs)
-        let viewModel = SongSearch.FetchSongs.ViewModel(displayedSongs: displayedSongs)
-        viewController?.displayFetchedSongs(viewModel: viewModel)
+        let viewModel = SongSearch.FetchSongs.ViewModel(fetchedSongs: displayedSongs)
+        viewController?.getFetchedSongs(viewModel: viewModel)
     }
     
-    private func convertSongs(songs: [Song]) -> [SongSearch.FetchSongs.ViewModel.DisplayedSong]
+    private func convertSongs(songs: [Song]) -> [SongSearch.FetchSongs.ViewModel.FetchedSong]
     {
-        return songs.map { SongSearch.FetchSongs.ViewModel.DisplayedSong(name: $0.name, artistName: $0.artistName, albumArtworkUrl100: $0.albumArtworkUrl100, albumId: $0.albumId) }
+        return songs.map { SongSearch.FetchSongs.ViewModel.FetchedSong(name: $0.name, artistName: $0.artistName, albumArtworkUrl100: $0.albumArtworkUrl100, albumId: $0.albumId) }
     }
 }

@@ -89,20 +89,20 @@ class SongSearchViewControllerTests: XCTestCase
         XCTAssertTrue(songSearchBusinessLogicSpy.fetchSongs, "viewDidLoad() should ask the interactor fetch songs")
     }
     
-    func testDisplayFetchedSongsShouldReloadTableView() {
+    func testGetFetchedSongsShouldReloadTableView() {
         // Given
         let tableViewSpy = TableViewSpy()
         sut.tableView = tableViewSpy
         loadView()
         
         // When
-        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
-        let viewModel = SongSearch.FetchSongs.ViewModel(displayedSongs: expectedSongs)
-        sut.displayFetchedSongs(viewModel: viewModel)
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.FetchedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
+        let viewModel = SongSearch.FetchSongs.ViewModel(fetchedSongs: expectedSongs)
+        sut.getFetchedSongs(viewModel: viewModel)
         
         // Then
-        let actualSongs = sut.displayedSongs
-        XCTAssertEqual(actualSongs, expectedSongs, "displayFetchedSongs(viewModel:) should display the songs results")
-        XCTAssert(tableViewSpy.reloadDataCalled, "displayFetchedSongs(viewModel:) should reload the table view")
+        let actualSongs = sut.fetchedSongs
+        XCTAssertEqual(actualSongs, expectedSongs, "getFetchedSongs(viewModel:) should display the songs results")
+        XCTAssert(tableViewSpy.reloadDataCalled, "getFetchedSongs(viewModel:) should reload the table view")
     }
 }

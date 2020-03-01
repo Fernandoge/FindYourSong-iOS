@@ -26,6 +26,33 @@ enum SongSearch
         }
         struct ViewModel
         {
+            struct FetchedSong: Equatable {
+                var name: String
+                var artistName: String
+                var albumArtworkUrl100: String
+                var albumId: Int
+            }
+            var fetchedSongs: [FetchedSong]
+        }
+    }
+    
+    enum SongsPagination
+    {
+        struct Request
+        {
+            var fetchedSongs: [SongSearch.FetchSongs.ViewModel.FetchedSong]
+            var currentPage: Int
+            var songsPerPage: Int
+        }
+        struct Response
+        {
+            var filteredSongs: [Song]
+            var currentPage: Int
+            var leftArrowStatus: Bool
+            var rightArrowStatus: Bool
+        }
+        struct ViewModel
+        {
             struct DisplayedSong: Equatable {
                 var name: String
                 var artistName: String
@@ -33,6 +60,9 @@ enum SongSearch
                 var albumId: Int
             }
             var displayedSongs: [DisplayedSong]
+            var title: String
+            var leftArrowStatus: Bool
+            var rightArrowStatus: Bool
         }
     }
 }

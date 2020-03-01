@@ -43,18 +43,18 @@ class SongSearchPresenterTests: XCTestCase
     
     class SongSearchDisplayLogicSpy: SongSearchDisplayLogic
     {
-        var displayFetchedSongsCalled = false
-        var displayFetchedSongsViewModel: SongSearch.FetchSongs.ViewModel?
+        var getFetchedSongsCalled = false
+        var getFetchedSongsViewModel: SongSearch.FetchSongs.ViewModel?
         
-        func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel) {
-            displayFetchedSongsCalled = true
-            displayFetchedSongsViewModel = viewModel
+        func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel) {
+            getFetchedSongsCalled = true
+            getFetchedSongsViewModel = viewModel
         }
     }
     
     // MARK: Tests
     
-    func testPresentFetchedSongsShouldAskViewControllerToFetchSongs()
+    func testPresentFetchedSongsShouldAskViewControllerToGetFetchSongs()
     {
         // Given
         let songSearchDisplayLogicSpy = SongSearchDisplayLogicSpy()
@@ -66,9 +66,9 @@ class SongSearchPresenterTests: XCTestCase
         sut.presentFetchedSongs(response: response)
         
         // Then
-        let expectedSongs = [SongSearch.FetchSongs.ViewModel.DisplayedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
-        let actualSongs = songSearchDisplayLogicSpy.displayFetchedSongsViewModel?.displayedSongs
-        XCTAssertTrue(songSearchDisplayLogicSpy.displayFetchedSongsCalled, "presentSomething(response:) should ask the view controller to display the result")
+        let expectedSongs = [SongSearch.FetchSongs.ViewModel.FetchedSong(name: "test", artistName: "test", albumArtworkUrl100: "test", albumId: 0)]
+        let actualSongs = songSearchDisplayLogicSpy.getFetchedSongsViewModel?.fetchedSongs
+        XCTAssertTrue(songSearchDisplayLogicSpy.getFetchedSongsCalled, "presentSomething(response:) should ask the view controller to display the result")
         XCTAssertEqual(actualSongs, expectedSongs, "presentFetchedGists(response:) should display the correct gists")
     }
 }

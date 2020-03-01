@@ -21,7 +21,7 @@ class SongCell: UITableViewCell {
 
 protocol SongSearchDisplayLogic: class
 {
-    func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
+    func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
 }
 
 class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
@@ -98,9 +98,10 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     }
     
     // MARK: Fetch Songs
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var displayedSongs: [SongSearch.FetchSongs.ViewModel.DisplayedSong] = []
+    var fetchedSongs: [SongSearch.FetchSongs.ViewModel.FetchedSong] = []
     
     func fetchSongs()
     {
@@ -108,12 +109,12 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
         interactor?.fetchSongs(request: request)
     }
     
-    func displayFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
+    func getFetchedSongs(viewModel: SongSearch.FetchSongs.ViewModel)
     {
-        displayedSongs = viewModel.displayedSongs
+        fetchedSongs = viewModel.fetchedSongs
         tableView.reloadData()
         DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
+            self.activityIndicator?.stopAnimating()
         }
     }
 }
