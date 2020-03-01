@@ -116,12 +116,13 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
     var player = AVPlayer()
     var timer = Timer()
     var totalSeconds: Double = 0
+    var playerPaused = true
     
     @IBOutlet weak var songProgressBar: UIProgressView!
+    @IBOutlet weak var playButton: UIButton!
     
     func playSongPreview(songPreviewUrl: String) {
         timer.invalidate()
-        songProgressBar.isHidden = false
         
         if let url = URL(string: songPreviewUrl) {
             player = AVPlayer(url: url)
@@ -131,6 +132,12 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         
         if let songTotalDuration = player.currentItem?.asset.duration {
             totalSeconds = CMTimeGetSeconds(songTotalDuration)
+            if totalSeconds > 0 {
+                songProgressBar.isHidden = false
+                playButton.isHidden = false
+                playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+                playerPaused = false
+            }
         }
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressBar), userInfo: nil, repeats: true)
@@ -146,15 +153,29 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         }
     }
     
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        if playerPaused {
+            playerPaused = false
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            player.play()
+        } else {
+            playerPaused = true
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            player.pause()
+        }
+    }
+    
     func resetPlayer() {
         songProgressBar.progress = 0
         songProgressBar.isHidden = true
+        playButton.isHidden = true
         timer.invalidate()
         player.pause()
     }
     
     // MARK: Fetch Album
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var albumImage: UIImageView!
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
@@ -170,9 +191,14 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
     func displayFetchedAlbum(viewModel: SongAlbum.FetchAlbum.ViewModel)
     {
         displayedAlbum = viewModel.displayedAlbum
-        albumImage.downloadFromURL(url: URL(string: displayedAlbum.albumArtworkUrl100)!)
+        if let url = URL(string: displayedAlbum.albumArtworkUrl100) {
+            albumImage.downloadFromURL(url: url)
+        }
         albumNameLabel.text = displayedAlbum.name
         artistNameLabel.text = displayedAlbum.artistName
         songsTableView.reloadData()
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+        }
     }
 }

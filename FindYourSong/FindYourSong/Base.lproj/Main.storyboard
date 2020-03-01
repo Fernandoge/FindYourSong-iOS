@@ -104,6 +104,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" id="tpu-Gi-b1i">
+                            <rect key="frame" x="0.0" y="156" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" id="CmQ-or-NCw" customClass="SongCell" customModule="FindYourSong" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="100"/>
@@ -186,6 +190,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="mDn-6i-9JL"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="tpu-Gi-b1i" id="yTE-i6-H5B"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aUQ-7U-uM4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -218,7 +225,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cCh-96-vk3">
-                                <rect key="frame" x="20" y="108" width="374" height="734"/>
+                                <rect key="frame" x="20" y="108" width="374" height="749"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.house" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="jwF-ZS-akx">
                                         <rect key="frame" x="137" y="-0.3333333333333357" width="100" height="99.333333333333343"/>
@@ -245,11 +252,14 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="aPH-PP-cer">
+                                        <rect key="frame" x="168.66666666666666" y="216" width="37" height="37"/>
+                                    </activityIndicatorView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="58" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T5J-Yc-nHb">
-                                        <rect key="frame" x="0.0" y="216" width="374" height="518"/>
+                                        <rect key="frame" x="0.0" y="261" width="374" height="488"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AlbumSongCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumSongCell" id="KKY-dg-4PA" customClass="AlbumSongCell" customModule="FindYourSongAux" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AlbumSongCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumSongCell" id="KKY-dg-4PA" customClass="AlbumSongCell" customModule="FindYourSong" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="374" height="58"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KKY-dg-4PA" id="8FL-CO-3NE">
@@ -304,8 +314,18 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gu-21-Jgm">
+                                        <rect key="frame" x="179.66666666666666" y="749" width="15" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="xDs-Su-nD0"/>
+                                        </constraints>
+                                        <state key="normal" image="play.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="oXu-5g-NJ7" eventType="touchUpInside" id="aMh-cM-KQX"/>
+                                        </connections>
+                                    </button>
                                     <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jnj-CO-xgy">
-                                        <rect key="frame" x="87" y="734" width="200" height="6"/>
+                                        <rect key="frame" x="87" y="749" width="200" height="6"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="6" id="afA-nB-hz2"/>
                                             <constraint firstAttribute="width" constant="200" id="g7B-M3-BLv"/>
@@ -322,16 +342,18 @@
                         <constraints>
                             <constraint firstItem="Q5a-CD-ykv" firstAttribute="trailing" secondItem="cCh-96-vk3" secondAttribute="trailingMargin" constant="20" id="18T-TI-xxv"/>
                             <constraint firstItem="cCh-96-vk3" firstAttribute="top" secondItem="Q5a-CD-ykv" secondAttribute="top" constant="20" id="IoW-tJ-vBh"/>
-                            <constraint firstItem="Q5a-CD-ykv" firstAttribute="bottom" secondItem="cCh-96-vk3" secondAttribute="bottom" constant="20" id="qiH-8E-d9i"/>
+                            <constraint firstItem="Q5a-CD-ykv" firstAttribute="bottom" secondItem="cCh-96-vk3" secondAttribute="bottom" constant="5" id="qiH-8E-d9i"/>
                             <constraint firstItem="cCh-96-vk3" firstAttribute="leading" secondItem="Q5a-CD-ykv" secondAttribute="leading" constant="20" id="wrb-j1-udw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Q5a-CD-ykv"/>
                     </view>
                     <navigationItem key="navigationItem" id="juo-Om-Lt3"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="aPH-PP-cer" id="mRa-Tb-AjC"/>
                         <outlet property="albumImage" destination="jwF-ZS-akx" id="BEN-Yv-228"/>
                         <outlet property="albumNameLabel" destination="b7s-4N-JMt" id="o55-bT-Bj3"/>
                         <outlet property="artistNameLabel" destination="7x8-x6-Fek" id="Fo8-L1-tkT"/>
+                        <outlet property="playButton" destination="1gu-21-Jgm" id="s1V-sn-rhv"/>
                         <outlet property="songProgressBar" destination="Jnj-CO-xgy" id="CnD-Oq-RKX"/>
                         <outlet property="songsTableView" destination="T5J-Yc-nHb" id="I2R-FG-VfQ"/>
                     </connections>
@@ -345,5 +367,6 @@
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="music.house" catalog="system" width="64" height="52"/>
         <image name="music.note.list" catalog="system" width="64" height="56"/>
+        <image name="play.fill" catalog="system" width="58" height="64"/>
     </resources>
 </document>

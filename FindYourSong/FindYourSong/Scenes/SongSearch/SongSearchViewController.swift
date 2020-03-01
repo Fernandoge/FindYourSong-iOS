@@ -98,10 +98,9 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     }
     
     // MARK: Fetch Songs
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var displayedSongs: [SongSearch.FetchSongs.ViewModel.DisplayedSong] = []
-    
-    //@IBOutlet weak var nameTextField: UITextField!
     
     func fetchSongs()
     {
@@ -113,5 +112,8 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     {
         displayedSongs = viewModel.displayedSongs
         tableView.reloadData()
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+        }
     }
 }
