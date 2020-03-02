@@ -1,16 +1,20 @@
 PODS:
   - Cache (5.2.0)
+  - Toast (4.0.0)
 
 DEPENDENCIES:
   - Cache
+  - Toast (~> 4.0.0)
 
 SPEC REPOS:
   trunk:
     - Cache
+    - Toast
 
 SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 893781da30e6e813b85461408e692b8cdbec1378
+PODFILE CHECKSUM: 378575916ee93fc30e5b63c8c00d5cf429137beb
 
 COCOAPODS: 1.8.4

@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-FindYourSong/Pods-FindYourSong-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Cache/Cache.framework
+${BUILT_PRODUCTS_DIR}/Toast/Toast.framework
