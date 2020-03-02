@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AnimatableReload
 
 
 class SongCell: UITableViewCell {
@@ -121,6 +122,8 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     @IBOutlet weak var leftArrowButton: UIBarButtonItem!
     @IBOutlet weak var rightArrowButton: UIBarButtonItem!
     
+    var animationDirection: String = "left"
+    
     var displayedSongs: [SongSearch.SongsPagination.ViewModel.DisplayedSong] = []
     var currentPage: Int = 1
     var songsPerPage: Int = 20
@@ -135,7 +138,7 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
         leftArrowButton.isEnabled = viewModel.leftArrowStatus
         rightArrowButton.isEnabled = viewModel.rightArrowStatus
         title = viewModel.title
-        tableView.reloadData()
+        AnimatableReload.reload(tableView: tableView, animationDirection: animationDirection)
         DispatchQueue.main.async {
             self.activityIndicator?.stopAnimating()
         }
@@ -146,11 +149,13 @@ class SongSearchViewController: UITableViewController, SongSearchDisplayLogic
     }
     
     @IBAction func leftArrowButton(_ sender: UIBarButtonItem) {
+        animationDirection = "right"
         currentPage -= 1
         filterSongs()
     }
     
     @IBAction func rightArrowButton(_ sender: UIBarButtonItem) {
+        animationDirection = "left"
         currentPage += 1
         filterSongs()
     }

@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AnimatableReload
 
 protocol  SendSongDisplayLogic: class
 {
@@ -96,6 +97,8 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
         } else {
             return true
         }
+        
+        AnimatableReload.reload(tableView: cachedSongsTableView, animationDirection: "down")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

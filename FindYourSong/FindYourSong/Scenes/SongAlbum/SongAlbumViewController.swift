@@ -13,6 +13,7 @@
 import UIKit
 import AVFoundation
 import Cache
+import AnimatableReload
 
 // MARK: Album Song Cell
 class AlbumSongCell: UITableViewCell {
@@ -201,7 +202,7 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         }
         albumNameLabel.text = displayedAlbum.name
         artistNameLabel.text = displayedAlbum.artistName
-        songsTableView.reloadData()
+        AnimatableReload.reload(tableView: songsTableView, animationDirection: "up")
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
         }

@@ -7,6 +7,6 @@ target 'FindYourSong' do
   # Pods for FindYourSong
   pod 'Cache'
   pod 'Toast', '~> 4.0.0'
-
+  pod "AnimatableReload"
 
 end
