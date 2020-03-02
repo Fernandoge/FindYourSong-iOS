@@ -11,16 +11,25 @@
 //
 
 import UIKit
+import Cache
+import AVFoundation
+import Toast
 import AnimatableReload
+
+class CachedSongCell: UITableViewCell {
+    @IBOutlet weak var albumImage: UIImageView!
+    @IBOutlet weak var songNameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
+}
 
 protocol  SendSongDisplayLogic: class
 {
     func sendSongToSearch(viewModel: SendSong.SendSong.ViewModel)
 }
 
-class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDisplayLogic
+class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDisplayLogic, UITableViewDataSource, UITableViewDelegate
 {
-    var interactor:  SendSongBusinessLogic?
+    var interactor: SendSongBusinessLogic?
     var router: (NSObjectProtocol & SendSongRoutingLogic & SendSongDataPassing)?
     
     // MARK: Object lifecycle
@@ -42,9 +51,9 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     private func setup()
     {
         let viewController = self
-        let interactor =  SendSongInteractor()
-        let presenter =  SendSongPresenter()
-        let router =  SendSongRouter()
+        let interactor = SendSongInteractor()
+        let presenter = SendSongPresenter()
+        let router = SendSongRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
@@ -67,39 +76,55 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     
     // MARK: View lifecycle
     
+    var firstLaunch = true
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
         searchTextField.delegate = self
-        //TODO: Fetch recent searches
+        cachedSongsTableView.dataSource = self
+        cachedSongsTableView.delegate = self
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        resetPlayer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         searchTextField.text = ""
-    }
-    
-    // MARK: Send song
-    
-    @IBOutlet weak var searchTextField: UITextField!
-    
-    @IBAction func searchPressed(_ sender: Any) {
-        if searchTextField.isEditing == false && searchTextField.text == "" {
-            searchTextField.placeholder = "Type here what you want to search"
-        } else {
-            searchTextField.endEditing(true)
-        }
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if isTextFieldEmpty(textField: textField){
-            return false
-        } else {
-            return true
+        if let safeSongsNames = UserDefaults.standard.array(forKey: "SongsNames") as! [String]? {
+            songsNames = safeSongsNames.reversed()
         }
         
-        AnimatableReload.reload(tableView: cachedSongsTableView, animationDirection: "down")
+        if let safeSongsAlbums = UserDefaults.standard.array(forKey: "SongsAlbums") as! [String]? {
+            songsAlbums = safeSongsAlbums.reversed()
+        }
+        
+        if let safeSongsArtists = UserDefaults.standard.array(forKey: "SongsArtists") as! [String]? {
+            songsArtists = safeSongsArtists.reversed()
+        }
+        
+        if let safeSongsURLs = UserDefaults.standard.array(forKey: "SongsURLs") as! [String]? {
+            songsURLs = safeSongsURLs.reversed()
+        }
+        if firstLaunch == false {
+            cachedSongsTableView.reloadData()
+        }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if firstLaunch {
+            AnimatableReload.reload(tableView: cachedSongsTableView, animationDirection: "down")
+            firstLaunch = false
+        }
+    }
+    
+    // MARK: Text field
+    
+    @IBOutlet weak var searchTextField: UITextField!
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
@@ -116,14 +141,132 @@ class SendSongViewController: UIViewController, UITextFieldDelegate, SendSongDis
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let songName = textField.text ?? ""
-        let request = SendSong.SendSong.Request(songName: songName)
-        interactor?.sendSong(request: request)
+        if isTextFieldEmpty(textField: textField) == false {
+            let songName = textField.text!
+            let request = SendSong.SendSong.Request(songName: songName)
+            interactor?.sendSong(request: request)
+        }
     }
     
+    
+    // MARK: Send song
+    
+    @IBAction func searchPressed(_ sender: Any) {
+        if searchTextField.isEditing == false && searchTextField.text == "" {
+            searchTextField.placeholder = "Type here what you want to search"
+        } else {
+            searchTextField.endEditing(true)
+        }
+    }
     
     func sendSongToSearch(viewModel: SendSong.SendSong.ViewModel)
     {
         router?.routeToSendSong(segue: nil)
     }
+    
+    // MARK: Songs table view
+    
+    @IBOutlet weak var cachedSongsTableView: UITableView!
+    
+    var songsNames = [String]()
+    var songsAlbums = [String]()
+    var songsArtists = [String]()
+    var songsURLs = [String]()
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return songsNames.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var cell = tableView.dequeueReusableCell(withIdentifier: "CachedSongCell") as? CachedSongCell
+        if cell == nil {
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "CachedSongCell") as? CachedSongCell
+        }
+        
+        cell?.songNameLabel.text = songsNames[indexPath.row]
+        cell?.artistNameLabel.text = songsArtists[indexPath.row]
+        if let url = URL(string: songsAlbums[indexPath.row]) {
+            cell?.albumImage.downloadFromURL(url: url)
+        }
+        return cell!
+        
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        selectedCell?.isSelected = false
+        let row = indexPath.row
+        let song = Song(name: songsNames[row], artistName: songsArtists[row], albumArtworkUrl100: songsAlbums[row], previewUrl: songsURLs[row], albumId: 0)
+        playSongPreview(song: song)
+    }
+    
+    // MARK: Play song
+    
+    var audioPlayer = AudioPlayer()
+    var timer = Timer()
+    var totalSeconds: Float64 = 0
+    var playerPaused = true
+    
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var songProgressBar: UIProgressView!
+    
+    func playSongPreview(song: Song) {
+        timer.invalidate()
+        audioPlayer.play(song: song, songStartedPlaying: { self.initiateProgressBar() } )
+    }
+    
+    func initiateProgressBar() {
+        if let songTotalDuration = audioPlayer.player.currentItem?.asset.duration {
+            totalSeconds = CMTimeGetSeconds(songTotalDuration)
+        }
+        
+        DispatchQueue.main.async {
+            self.songProgressBar.isHidden = false
+            self.playButton.isHidden = false
+            self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            self.playerPaused = false
+            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.updateProgressBar), userInfo: nil, repeats: true)
+        }
+        
+    }
+    
+    @objc func updateProgressBar() {
+        if songProgressBar.progress == 1 {
+            resetPlayer()
+        } else {
+            let songSecondsPassed = CMTimeGetSeconds(audioPlayer.player.currentTime())
+            let percentageProgress = songSecondsPassed / totalSeconds
+            songProgressBar.progress = Float(percentageProgress)
+        }
+    }
+    
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        if playerPaused {
+            playerPaused = false
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            audioPlayer.player.play()
+        } else {
+            playerPaused = true
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            audioPlayer.player.pause()
+        }
+    }
+    
+    func resetPlayer() {
+        songProgressBar.progress = 0
+        songProgressBar.isHidden = true
+        playButton.isHidden = true
+        timer.invalidate()
+        audioPlayer.player.pause()
+    }
+ 
+    // MARK: Premium version
+    
+    @IBAction func premiumButtonPressed(_ sender: UIButton) {
+        self.view.makeToast("Coming soon, don't waste your money!", duration: 2, position: CSToastPositionCenter)
+    }
+    
+    
 }

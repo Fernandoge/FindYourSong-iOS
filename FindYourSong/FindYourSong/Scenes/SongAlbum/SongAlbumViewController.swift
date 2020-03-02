@@ -116,37 +116,38 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)
         selectedCell?.isSelected = false
-        playSongPreview(songPreviewUrl: displayedAlbum.songs[indexPath.row].previewUrl)
+        
+        playSongPreview(song: displayedAlbum.songs[indexPath.row])
     }
     
     // MARK: Play song
     
     var audioPlayer = AudioPlayer()
     var timer = Timer()
-    var totalSeconds: Double = 0
+    var totalSeconds: Float64 = 0
     var playerPaused = true
     
     @IBOutlet weak var songProgressBar: UIProgressView!
     @IBOutlet weak var playButton: UIButton!
     
-    func playSongPreview(songPreviewUrl: String) {
+    func playSongPreview(song: Song) {
         timer.invalidate()
-        
-        if let url = URL(string: songPreviewUrl) {
-            audioPlayer.play(with: url)
-        }
-
+        audioPlayer.play(song: song, songStartedPlaying: { self.initiateProgressBar() } )
+    }
+    
+    func initiateProgressBar() {
         if let songTotalDuration = audioPlayer.player.currentItem?.asset.duration {
             totalSeconds = CMTimeGetSeconds(songTotalDuration)
-            if totalSeconds > 0 {
-                songProgressBar.isHidden = false
-                playButton.isHidden = false
-                playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-                playerPaused = false
-            }
         }
         
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressBar), userInfo: nil, repeats: true)
+        DispatchQueue.main.async {
+            self.songProgressBar.isHidden = false
+            self.playButton.isHidden = false
+            self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            self.playerPaused = false
+            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.updateProgressBar), userInfo: nil, repeats: true)
+        }
+        
     }
     
     @objc func updateProgressBar() {
