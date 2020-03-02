@@ -12,6 +12,8 @@
 
 import UIKit
 import AVFoundation
+import Cache
+import AnimatableReload
 
 // MARK: Album Song Cell
 class AlbumSongCell: UITableViewCell {
@@ -114,46 +116,45 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)
         selectedCell?.isSelected = false
-        playSongPreview(songPreviewUrl: displayedAlbum.songs[indexPath.row].previewUrl)
+        
+        playSongPreview(song: displayedAlbum.songs[indexPath.row])
     }
     
     // MARK: Play song
     
-    var player = AVPlayer()
+    var audioPlayer = AudioPlayer()
     var timer = Timer()
-    var totalSeconds: Double = 0
+    var totalSeconds: Float64 = 0
     var playerPaused = true
     
     @IBOutlet weak var songProgressBar: UIProgressView!
     @IBOutlet weak var playButton: UIButton!
     
-    func playSongPreview(songPreviewUrl: String) {
+    func playSongPreview(song: Song) {
         timer.invalidate()
-        
-        if let url = URL(string: songPreviewUrl) {
-            player = AVPlayer(url: url)
-            player.volume = 1.0
-            player.play()
-        }
-        
-        if let songTotalDuration = player.currentItem?.asset.duration {
+        audioPlayer.play(song: song, songStartedPlaying: { self.initiateProgressBar() } )
+    }
+    
+    func initiateProgressBar() {
+        if let songTotalDuration = audioPlayer.player.currentItem?.asset.duration {
             totalSeconds = CMTimeGetSeconds(songTotalDuration)
-            if totalSeconds > 0 {
-                songProgressBar.isHidden = false
-                playButton.isHidden = false
-                playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-                playerPaused = false
-            }
         }
         
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressBar), userInfo: nil, repeats: true)
+        DispatchQueue.main.async {
+            self.songProgressBar.isHidden = false
+            self.playButton.isHidden = false
+            self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            self.playerPaused = false
+            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.updateProgressBar), userInfo: nil, repeats: true)
+        }
+        
     }
     
     @objc func updateProgressBar() {
         if songProgressBar.progress == 1 {
             resetPlayer()
         } else {
-            let songSecondsPassed = CMTimeGetSeconds(player.currentTime())
+            let songSecondsPassed = CMTimeGetSeconds(audioPlayer.player.currentTime())
             let percentageProgress = songSecondsPassed / totalSeconds
             songProgressBar.progress = Float(percentageProgress)
         }
@@ -163,11 +164,11 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         if playerPaused {
             playerPaused = false
             playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            player.play()
+            audioPlayer.player.play()
         } else {
             playerPaused = true
             playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            player.pause()
+            audioPlayer.player.pause()
         }
     }
     
@@ -176,7 +177,7 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         songProgressBar.isHidden = true
         playButton.isHidden = true
         timer.invalidate()
-        player.pause()
+        audioPlayer.player.pause()
     }
     
     // MARK: Fetch Album
@@ -202,7 +203,7 @@ class SongAlbumViewController: UIViewController, SongAlbumDisplayLogic, UITableV
         }
         albumNameLabel.text = displayedAlbum.name
         artistNameLabel.text = displayedAlbum.artistName
-        songsTableView.reloadData()
+        AnimatableReload.reload(tableView: songsTableView, animationDirection: "up")
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
         }

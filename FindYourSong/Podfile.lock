@@ -1,0 +1,24 @@
+PODS:
+  - AnimatableReload (0.2.0)
+  - Cache (5.2.0)
+  - Toast (4.0.0)
+
+DEPENDENCIES:
+  - AnimatableReload
+  - Cache
+  - Toast (~> 4.0.0)
+
+SPEC REPOS:
+  trunk:
+    - AnimatableReload
+    - Cache
+    - Toast
+
+SPEC CHECKSUMS:
+  AnimatableReload: 9576d3019bfb103f76b5f37fa6f8915bd8307527
+  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+
+PODFILE CHECKSUM: da65ab9553ff37734539ed894a92364132329bc7
+
+COCOAPODS: 1.8.4

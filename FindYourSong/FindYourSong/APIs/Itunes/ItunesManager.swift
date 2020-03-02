@@ -148,10 +148,17 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
         var songs = [Song]()
         
         for result in data.results {
-            let name = result.trackCensoredName!
+            var name = ""
+            var previewUrl = ""
+            if let safeName = result.trackCensoredName {
+                name = safeName
+            }
+            if let safePreviewUrl = result.previewUrl {
+                previewUrl = safePreviewUrl
+            }
             let artistName = result.artistName
             let albumArtworkUrl100 = result.artworkUrl100
-            let previewUrl = result.previewUrl!
+            
             let albumId = result.collectionId
             
             let songModel = Song(name: name, artistName: artistName, albumArtworkUrl100: albumArtworkUrl100, previewUrl: previewUrl, albumId: albumId)
