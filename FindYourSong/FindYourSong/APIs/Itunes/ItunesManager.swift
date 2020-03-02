@@ -114,7 +114,7 @@ class ItunesManager: NSObject, ItunesManagerProtocol, URLSessionDataDelegate, UR
             
         }catch {
             print(error.localizedDescription)
-            return nil
+            return []
         }
     }
     
